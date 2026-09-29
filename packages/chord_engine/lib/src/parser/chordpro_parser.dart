@@ -5,7 +5,8 @@ import '../models/parsed_song.dart';
 
 /// Parses ChordPro formatted strings into structured [ParsedSong] instances.
 class ChordProParser {
-  static final RegExp _tagRegex = RegExp(r'\{([a-zA-Z0-9_\-]+)(?::\s*(.*?))?\}');
+  static final RegExp _tagRegex =
+      RegExp(r'\{([a-zA-Z0-9_\-]+)(?::\s*(.*?))?\}');
   static final RegExp _inlineChordRegex = RegExp(r'\[([^\]]+)\]');
 
   /// Parse ChordPro text into [ParsedSong]
@@ -180,7 +181,8 @@ class ChordProParser {
 
       // Text following this chord (up to next match or end of line)
       final textStart = match.end;
-      final textEnd = (i + 1 < matches.length) ? matches[i + 1].start : line.length;
+      final textEnd =
+          (i + 1 < matches.length) ? matches[i + 1].start : line.length;
       final segmentLyrics = line.substring(textStart, textEnd);
 
       segments.add(ChordSegment(

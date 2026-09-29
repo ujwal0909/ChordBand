@@ -6,7 +6,15 @@ class NashvilleConverter {
   static const List<int> _majorScaleIntervals = [0, 2, 4, 5, 7, 9, 11];
 
   static const List<String> _scaleDegrees = ['1', '2', '3', '4', '5', '6', '7'];
-  static const List<String> _romanDegrees = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+  static const List<String> _romanDegrees = [
+    'I',
+    'II',
+    'III',
+    'IV',
+    'V',
+    'VI',
+    'VII'
+  ];
 
   /// Convert a [Chord] to its Nashville Number System representation in [key].
   /// Example: C in Key C -> "1", Am in Key C -> "6m", G/B in Key C -> "5/7", Bb in Key C -> "b7"

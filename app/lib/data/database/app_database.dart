@@ -29,8 +29,10 @@ class LyricVersionsTable extends Table {
   TextColumn get id => text()();
   TextColumn get songId => text()();
   TextColumn get languageCode => text()(); // 'en', 'te', 'te-latn'
-  TextColumn get languageName => text()(); // 'English', 'తెలుగు', 'Telugu (English script)'
-  TextColumn get content => text()(); // ChordPro formatted content in this script
+  TextColumn get languageName =>
+      text()(); // 'English', 'తెలుగు', 'Telugu (English script)'
+  TextColumn get content =>
+      text()(); // ChordPro formatted content in this script
   BoolColumn get isPrimary => boolean().withDefault(const Constant(false))();
 
   @override
@@ -57,7 +59,8 @@ class SetlistItemsTable extends Table {
   TextColumn get keyOverride => text().nullable()();
   IntColumn get capoOverride => integer().nullable()();
   TextColumn get notes => text().nullable()();
-  IntColumn get estimatedDurationSeconds => integer().withDefault(const Constant(240))();
+  IntColumn get estimatedDurationSeconds =>
+      integer().withDefault(const Constant(240))();
 
   @override
   Set<Column> get primaryKey => {id};
@@ -67,7 +70,8 @@ class UserSongSettingsTable extends Table {
   TextColumn get songId => text()();
   TextColumn get preferredKey => text().nullable()();
   IntColumn get preferredCapo => integer().withDefault(const Constant(0))();
-  BoolColumn get displayNashville => boolean().withDefault(const Constant(false))();
+  BoolColumn get displayNashville =>
+      boolean().withDefault(const Constant(false))();
   BoolColumn get displayRoman => boolean().withDefault(const Constant(false))();
   RealColumn get fontSize => real().withDefault(const Constant(16.0))();
   RealColumn get autoScrollSpeed => real().withDefault(const Constant(1.0))();
@@ -80,7 +84,8 @@ class UserSongSettingsTable extends Table {
 class BandGroupsTable extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
-  TextColumn get role => text().withDefault(const Constant('owner'))(); // owner, admin, editor, viewer
+  TextColumn get role => text()
+      .withDefault(const Constant('owner'))(); // owner, admin, editor, viewer
   TextColumn get inviteCode => text()();
   DateTimeColumn get updatedAt => dateTime()();
 
@@ -102,7 +107,6 @@ class AuditLogsTable extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-
 @DriftDatabase(tables: [
   SongsTable,
   LyricVersionsTable,
@@ -119,21 +123,30 @@ class AppDatabase extends _$AppDatabase {
   int get schemaVersion => 1;
 
   // Song Queries
-  Future<List<SongsTableData>> getAllSongs() => (select(songsTable)..orderBy([(t) => OrderingTerm(expression: t.title)])).get();
+  Future<List<SongsTableData>> getAllSongs() =>
+      (select(songsTable)..orderBy([(t) => OrderingTerm(expression: t.title)]))
+          .get();
 
-  Stream<List<SongsTableData>> watchAllSongs() => (select(songsTable)..orderBy([(t) => OrderingTerm(expression: t.title)])).watch();
+  Stream<List<SongsTableData>> watchAllSongs() =>
+      (select(songsTable)..orderBy([(t) => OrderingTerm(expression: t.title)]))
+          .watch();
 
-  Future<SongsTableData?> getSongById(String id) => (select(songsTable)..where((t) => t.id.equals(id))).getSingleOrNull();
+  Future<SongsTableData?> getSongById(String id) =>
+      (select(songsTable)..where((t) => t.id.equals(id))).getSingleOrNull();
 
-  Stream<SongsTableData?> watchSongById(String id) => (select(songsTable)..where((t) => t.id.equals(id))).watchSingleOrNull();
+  Stream<SongsTableData?> watchSongById(String id) =>
+      (select(songsTable)..where((t) => t.id.equals(id))).watchSingleOrNull();
 
-  Future<int> insertSong(SongsTableCompanion song) => into(songsTable).insert(song, mode: InsertMode.insertOrReplace);
+  Future<int> insertSong(SongsTableCompanion song) =>
+      into(songsTable).insert(song, mode: InsertMode.insertOrReplace);
 
-  Future<bool> updateSong(SongsTableCompanion song) => update(songsTable).replace(song);
+  Future<bool> updateSong(SongsTableCompanion song) =>
+      update(songsTable).replace(song);
 
   Future<int> deleteSong(String id) async {
     await (delete(lyricVersionsTable)..where((t) => t.songId.equals(id))).go();
-    await (delete(userSongSettingsTable)..where((t) => t.songId.equals(id))).go();
+    await (delete(userSongSettingsTable)..where((t) => t.songId.equals(id)))
+        .go();
     await (delete(setlistItemsTable)..where((t) => t.songId.equals(id))).go();
     return (delete(songsTable)..where((t) => t.id.equals(id))).go();
   }
@@ -143,40 +156,52 @@ class AppDatabase extends _$AppDatabase {
       (select(lyricVersionsTable)..where((t) => t.songId.equals(songId))).get();
 
   Stream<List<LyricVersionsTableData>> watchLyricVersions(String songId) =>
-      (select(lyricVersionsTable)..where((t) => t.songId.equals(songId))).watch();
+      (select(lyricVersionsTable)..where((t) => t.songId.equals(songId)))
+          .watch();
 
   Future<int> insertLyricVersion(LyricVersionsTableCompanion version) =>
-      into(lyricVersionsTable).insert(version, mode: InsertMode.insertOrReplace);
+      into(lyricVersionsTable)
+          .insert(version, mode: InsertMode.insertOrReplace);
 
   // User Song Settings
   Future<UserSongSettingsTableData?> getUserSettings(String songId) =>
-      (select(userSongSettingsTable)..where((t) => t.songId.equals(songId))).getSingleOrNull();
+      (select(userSongSettingsTable)..where((t) => t.songId.equals(songId)))
+          .getSingleOrNull();
 
   Stream<UserSongSettingsTableData?> watchUserSettings(String songId) =>
-      (select(userSongSettingsTable)..where((t) => t.songId.equals(songId))).watchSingleOrNull();
+      (select(userSongSettingsTable)..where((t) => t.songId.equals(songId)))
+          .watchSingleOrNull();
 
   Future<int> saveUserSettings(UserSongSettingsTableCompanion settings) =>
-      into(userSongSettingsTable).insert(settings, mode: InsertMode.insertOrReplace);
+      into(userSongSettingsTable)
+          .insert(settings, mode: InsertMode.insertOrReplace);
 
   // Setlists
-  Future<List<SetlistsTableData>> getAllSetlists() => (select(setlistsTable)..orderBy([(t) => OrderingTerm.desc(t.updatedAt)])).get();
+  Future<List<SetlistsTableData>> getAllSetlists() =>
+      (select(setlistsTable)..orderBy([(t) => OrderingTerm.desc(t.updatedAt)]))
+          .get();
 
-  Stream<List<SetlistsTableData>> watchAllSetlists() => (select(setlistsTable)..orderBy([(t) => OrderingTerm.desc(t.updatedAt)])).watch();
+  Stream<List<SetlistsTableData>> watchAllSetlists() =>
+      (select(setlistsTable)..orderBy([(t) => OrderingTerm.desc(t.updatedAt)]))
+          .watch();
 
-  Future<SetlistsTableData?> getSetlistById(String id) => (select(setlistsTable)..where((t) => t.id.equals(id))).getSingleOrNull();
+  Future<SetlistsTableData?> getSetlistById(String id) =>
+      (select(setlistsTable)..where((t) => t.id.equals(id))).getSingleOrNull();
 
-  Future<int> insertSetlist(SetlistsTableCompanion setlist) => into(setlistsTable).insert(setlist, mode: InsertMode.insertOrReplace);
+  Future<int> insertSetlist(SetlistsTableCompanion setlist) =>
+      into(setlistsTable).insert(setlist, mode: InsertMode.insertOrReplace);
 
   Future<int> deleteSetlist(String id) async {
-    await (delete(setlistItemsTable)..where((t) => t.setlistId.equals(id))).go();
+    await (delete(setlistItemsTable)..where((t) => t.setlistId.equals(id)))
+        .go();
     return (delete(setlistsTable)..where((t) => t.id.equals(id))).go();
   }
 
   Stream<List<SetlistItemsTableData>> watchSetlistItems(String setlistId) =>
       (select(setlistItemsTable)
-        ..where((t) => t.setlistId.equals(setlistId))
-        ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
-      .watch();
+            ..where((t) => t.setlistId.equals(setlistId))
+            ..orderBy([(t) => OrderingTerm.asc(t.sortOrder)]))
+          .watch();
 
   Future<int> insertSetlistItem(SetlistItemsTableCompanion item) =>
       into(setlistItemsTable).insert(item, mode: InsertMode.insertOrReplace);
@@ -185,7 +210,8 @@ class AppDatabase extends _$AppDatabase {
       (delete(setlistItemsTable)..where((t) => t.id.equals(itemId))).go();
 
   // Band Groups
-  Stream<List<BandGroupsTableData>> watchGroups() => select(bandGroupsTable).watch();
+  Stream<List<BandGroupsTableData>> watchGroups() =>
+      select(bandGroupsTable).watch();
 
   Future<int> insertGroup(BandGroupsTableCompanion group) =>
       into(bandGroupsTable).insert(group, mode: InsertMode.insertOrReplace);
@@ -199,7 +225,7 @@ class AppDatabase extends _$AppDatabase {
 
   Stream<List<AuditLogsTableData>> watchAuditLogs(String entityId) =>
       (select(auditLogsTable)
-        ..where((t) => t.entityId.equals(entityId))
-        ..orderBy([(t) => OrderingTerm.desc(t.timestamp)]))
-      .watch();
+            ..where((t) => t.entityId.equals(entityId))
+            ..orderBy([(t) => OrderingTerm.desc(t.timestamp)]))
+          .watch();
 }

@@ -34,11 +34,12 @@ That [Em]saved a wretch like [D]me
 </w:document>
 ''';
       final xmlBytes = utf8.encode(docXml);
-      archive.addFile(ArchiveFile('word/document.xml', xmlBytes.length, xmlBytes));
+      archive
+          .addFile(ArchiveFile('word/document.xml', xmlBytes.length, xmlBytes));
       final zipBytes = ZipEncoder().encode(archive);
 
       final extracted = DocumentTextExtractor.extractText(
-        Uint8List.fromList(zipBytes!),
+        Uint8List.fromList(zipBytes),
         'WorshipSong.docx',
       );
 
@@ -46,7 +47,8 @@ That [Em]saved a wretch like [D]me
       expect(extracted, contains('[F]Nanu preminchina [C]Yesa'));
     });
 
-    test('extracts text from simulated PDF with compressed FlateDecode stream', () {
+    test('extracts text from simulated PDF with compressed FlateDecode stream',
+        () {
       // Simulate PDF stream containing PDF text drawing operators
       const streamContent = '''
 BT
@@ -57,7 +59,8 @@ BT
 ([G]   [C]   [D]) Tj
 ET
 ''';
-      final compressedStream = ZLibEncoder().encode(utf8.encode(streamContent));
+      final compressedStream =
+          const ZLibEncoder().encode(utf8.encode(streamContent));
       final latin1Compressed = latin1.decode(compressedStream);
 
       final pdfContent = '''
@@ -90,7 +93,8 @@ BT
 [(Hotel ) -10 (California ) -5 (intro)] TJ
 ET
 ''';
-      final compressedStream = ZLibEncoder().encode(utf8.encode(streamContent));
+      final compressedStream =
+          const ZLibEncoder().encode(utf8.encode(streamContent));
       final latin1Compressed = latin1.decode(compressedStream);
 
       final pdfContent = '''
@@ -104,7 +108,8 @@ endobj
 ''';
 
       final pdfBytes = Uint8List.fromList(latin1.encode(pdfContent));
-      final extracted = DocumentTextExtractor.extractText(pdfBytes, 'chords.pdf');
+      final extracted =
+          DocumentTextExtractor.extractText(pdfBytes, 'chords.pdf');
 
       expect(extracted, contains('Hotel California intro'));
     });
@@ -183,10 +188,12 @@ And [G]heaven and [A]nature sing [D]
 
       final setlists = await db.getAllSetlists();
       expect(setlists.length, 2);
-      expect(setlists.any((s) => s.title == 'Sunday Worship Gathering'), isTrue);
+      expect(
+          setlists.any((s) => s.title == 'Sunday Worship Gathering'), isTrue);
       expect(setlists.any((s) => s.title == 'Acoustic Band Rehearsal'), isTrue);
 
-      final sundaySetlist = setlists.firstWhere((s) => s.title == 'Sunday Worship Gathering');
+      final sundaySetlist =
+          setlists.firstWhere((s) => s.title == 'Sunday Worship Gathering');
       final items = await db.watchSetlistItems(sundaySetlist.id).first;
       expect(items.isNotEmpty, isTrue);
 

@@ -86,8 +86,13 @@ Music fills the air
       expect(song.artist, equals('Singer'));
       expect(song.originalKey, equals(KeySignature.keyD));
       expect(song.sections.length, equals(1));
-      expect(song.sections.first.lines.where((l) => l.type != LineType.empty).length, equals(2));
-      expect(song.sections.first.lines.firstWhere((l) => l.hasChords).hasChords, isTrue);
+      expect(
+          song.sections.first.lines
+              .where((l) => l.type != LineType.empty)
+              .length,
+          equals(2));
+      expect(song.sections.first.lines.firstWhere((l) => l.hasChords).hasChords,
+          isTrue);
     });
   });
 }

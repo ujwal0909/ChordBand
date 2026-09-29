@@ -31,10 +31,10 @@ class GroupsScreen extends ConsumerWidget {
         children: [
           // Step-by-Step Instructions Banner
           Card(
-            color: Colors.blue.withOpacity(0.08),
+            color: Colors.blue.withValues(alpha: 0.08),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
-              side: BorderSide(color: Colors.blue.withOpacity(0.3)),
+              side: BorderSide(color: Colors.blue.withValues(alpha: 0.3)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(14),
@@ -45,7 +45,9 @@ class GroupsScreen extends ConsumerWidget {
                     children: [
                       Icon(Icons.info_outline, color: Colors.blue, size: 20),
                       SizedBox(width: 8),
-                      Text('How Band Collaboration Works', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                      Text('How Band Collaboration Works',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14)),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -59,7 +61,8 @@ class GroupsScreen extends ConsumerWidget {
                       FilledButton.tonalIcon(
                         onPressed: () => context.push('/live'),
                         icon: const Icon(Icons.podcasts, size: 16),
-                        label: const Text('Go to Live Stage Broadcast Mode', style: TextStyle(fontSize: 12)),
+                        label: const Text('Go to Live Stage Broadcast Mode',
+                            style: TextStyle(fontSize: 12)),
                         style: FilledButton.styleFrom(
                           visualDensity: VisualDensity.compact,
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -85,15 +88,22 @@ class GroupsScreen extends ConsumerWidget {
                       Row(
                         children: [
                           CircleAvatar(
-                            backgroundColor: primaryAccent.withOpacity(0.2),
-                            child: Icon(Icons.music_video, color: primaryAccent),
+                            backgroundColor:
+                                primaryAccent.withValues(alpha: 0.2),
+                            child:
+                                Icon(Icons.music_video, color: primaryAccent),
                           ),
                           const SizedBox(width: 12),
                           const Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('The Sunday Collective', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                              Text('Role: Band Leader (Owner)', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                              Text('The Sunday Collective',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              Text('Role: Band Leader (Owner)',
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.grey)),
                             ],
                           ),
                         ],
@@ -101,22 +111,28 @@ class GroupsScreen extends ConsumerWidget {
                       IconButton(
                         icon: const Icon(Icons.qr_code_2),
                         tooltip: 'Invite via QR Code',
-                        onPressed: () => _showInviteQrDialog(context, 'BAND-7829-SUN'),
+                        onPressed: () =>
+                            _showInviteQrDialog(context, 'BAND-7829-SUN'),
                       ),
                     ],
                   ),
                   const Divider(height: 24),
-                  const Text('Permissions & Members:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  const Text('Permissions & Members:',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                   const SizedBox(height: 8),
                   _buildMemberTile('Ujwal (You)', 'Owner / Leader', Icons.star),
-                  _buildMemberTile('David', 'Editor (Chords & Lyrics)', Icons.edit),
-                  _buildMemberTile('Sarah', 'Viewer (Musician)', Icons.visibility),
+                  _buildMemberTile(
+                      'David', 'Editor (Chords & Lyrics)', Icons.edit),
+                  _buildMemberTile(
+                      'Sarah', 'Viewer (Musician)', Icons.visibility),
                   const SizedBox(height: 12),
                   Row(
                     children: [
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: () => _showInviteQrDialog(context, 'BAND-7829-SUN'),
+                          onPressed: () =>
+                              _showInviteQrDialog(context, 'BAND-7829-SUN'),
                           icon: const Icon(Icons.share),
                           label: const Text('Share Invite Code'),
                         ),
@@ -155,7 +171,8 @@ class GroupsScreen extends ConsumerWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Scan this QR code with the ChordBand app on any device:'),
+            const Text(
+                'Scan this QR code with the ChordBand app on any device:'),
             const SizedBox(height: 16),
             SizedBox(
               width: 180,
@@ -174,7 +191,8 @@ class GroupsScreen extends ConsumerWidget {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Close')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Close')),
         ],
       ),
     );
@@ -192,7 +210,8 @@ class GroupsScreen extends ConsumerWidget {
           autofocus: true,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           FilledButton(
             onPressed: () {
               Navigator.pop(ctx);

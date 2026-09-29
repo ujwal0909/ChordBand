@@ -24,7 +24,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       if (mounted) {
         if (cred != null) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Welcome, ${cred.user?.displayName ?? cred.user?.email ?? "Musician"}!')),
+            SnackBar(
+                content: Text(
+                    'Welcome, ${cred.user?.displayName ?? cred.user?.email ?? "Musician"}!')),
           );
         }
       }
@@ -32,7 +34,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Google Sign-In note: $e\n(Ensure Google Sign-In is enabled in your Firebase Console)'),
+            content: Text(
+                'Google Sign-In note: $e\n(Ensure Google Sign-In is enabled in your Firebase Console)'),
             duration: const Duration(seconds: 4),
           ),
         );
@@ -57,13 +60,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             children: [
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(labelText: 'Email Address', border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                    labelText: 'Email Address', border: OutlineInputBorder()),
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: passController,
-                decoration: const InputDecoration(labelText: 'Password', border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                    labelText: 'Password', border: OutlineInputBorder()),
                 obscureText: true,
               ),
               const SizedBox(height: 8),
@@ -71,12 +76,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onPressed: () {
                   setDialogState(() => isRegister = !isRegister);
                 },
-                child: Text(isRegister ? 'Already have an account? Sign In' : 'Need an account? Register here'),
+                child: Text(isRegister
+                    ? 'Already have an account? Sign In'
+                    : 'Need an account? Register here'),
               ),
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('Cancel')),
             FilledButton(
               onPressed: () async {
                 final email = emailController.text.trim();
@@ -132,7 +141,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Account & Band Cloud Sync', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const Text('Account & Band Cloud Sync',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
                   if (user != null && !user.isAnonymous) ...[
                     // Signed In View
@@ -148,7 +159,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                         ? user.email![0]
                                         : 'U')
                                 .toUpperCase(),
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           ),
                         ),
                         const SizedBox(width: 14),
@@ -158,22 +172,28 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             children: [
                               Text(
                                 user.displayName ?? 'ChordBand Musician',
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
                               ),
                               Text(
                                 user.email ?? 'Connected',
-                                style: const TextStyle(color: Colors.grey, fontSize: 13),
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 13),
                               ),
                               const SizedBox(height: 2),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 1),
                                 decoration: BoxDecoration(
-                                  color: Colors.green.withOpacity(0.15),
+                                  color: Colors.green.withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: const Text(
                                   'Cloud Sync Active',
-                                  style: TextStyle(fontSize: 10, color: Colors.green, fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
@@ -182,9 +202,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         OutlinedButton(
                           onPressed: () async {
                             await ref.read(authServiceProvider).signOut();
-                            if (mounted) {
+                            if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Signed out successfully')),
+                                const SnackBar(
+                                    content: Text('Signed out successfully')),
                               );
                             }
                           },
@@ -206,7 +227,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           child: FilledButton.tonalIcon(
                             onPressed: _isSigningIn ? null : _signInWithGoogle,
                             icon: _isSigningIn
-                                ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                        strokeWidth: 2))
                                 : const Icon(Icons.g_mobiledata, size: 28),
                             label: const Text('Sign In with Google'),
                             style: FilledButton.styleFrom(
@@ -221,7 +246,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           icon: const Icon(Icons.mail_outline, size: 18),
                           label: const Text('Email'),
                           style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 16),
                           ),
                         ),
                       ],
@@ -241,13 +267,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('App Appearance', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const Text('App Appearance',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
                   SegmentedButton<AppThemeMode>(
                     segments: const [
-                      ButtonSegment(value: AppThemeMode.light, label: Text('Light'), icon: Icon(Icons.light_mode)),
-                      ButtonSegment(value: AppThemeMode.dark, label: Text('Dark'), icon: Icon(Icons.dark_mode)),
-                      ButtonSegment(value: AppThemeMode.stage, label: Text('Stage'), icon: Icon(Icons.nightlife)),
+                      ButtonSegment(
+                          value: AppThemeMode.light,
+                          label: Text('Light'),
+                          icon: Icon(Icons.light_mode)),
+                      ButtonSegment(
+                          value: AppThemeMode.dark,
+                          label: Text('Dark'),
+                          icon: Icon(Icons.dark_mode)),
+                      ButtonSegment(
+                          value: AppThemeMode.stage,
+                          label: Text('Stage'),
+                          icon: Icon(Icons.nightlife)),
                     ],
                     selected: {themeMode},
                     onSelectionChanged: (set) {
@@ -275,18 +312,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Language / భాష', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  const Text('Language / భాష',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 12),
                   Consumer(
                     builder: (context, ref, _) {
                       final currentLocale = ref.watch(appLocaleProvider);
-                      final selectedCode = currentLocale?.languageCode ?? 'system';
+                      final selectedCode =
+                          currentLocale?.languageCode ?? 'system';
 
                       return SegmentedButton<String>(
                         segments: const [
-                          ButtonSegment(value: 'system', label: Text('Auto / System')),
+                          ButtonSegment(
+                              value: 'system', label: Text('Auto / System')),
                           ButtonSegment(value: 'en', label: Text('English')),
-                          ButtonSegment(value: 'te', label: Text('తెలుగు (Telugu)')),
+                          ButtonSegment(
+                              value: 'te', label: Text('తెలుగు (Telugu)')),
                         ],
                         selected: {selectedCode},
                         onSelectionChanged: (set) {
@@ -294,7 +336,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           if (code == 'system') {
                             ref.read(appLocaleProvider.notifier).state = null;
                           } else {
-                            ref.read(appLocaleProvider.notifier).state = Locale(code);
+                            ref.read(appLocaleProvider.notifier).state =
+                                Locale(code);
                           }
                         },
                       );
@@ -313,7 +356,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               children: [
                 SwitchListTile(
                   title: const Text('Anonymous Crash Reports'),
-                  subtitle: const Text('Help improve ChordBand stability (no telemetry or analytics)'),
+                  subtitle: const Text(
+                      'Help improve ChordBand stability (no telemetry or analytics)'),
                   value: _crashReporting,
                   onChanged: (val) {
                     setState(() => _crashReporting = val);
@@ -339,18 +383,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ListTile(
                   leading: const Icon(Icons.file_download),
                   title: const Text('Export Songbook Backup'),
-                  subtitle: const Text('Save all chords, lyrics, and setlists to file'),
+                  subtitle: const Text(
+                      'Save all chords, lyrics, and setlists to file'),
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Songbook backup exported successfully!')),
+                      const SnackBar(
+                          content:
+                              Text('Songbook backup exported successfully!')),
                     );
                   },
                 ),
                 const Divider(height: 1),
                 ListTile(
                   leading: const Icon(Icons.delete_forever, color: Colors.red),
-                  title: const Text('Delete Account & Cloud Data', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                  subtitle: const Text('Permanently remove your account and all cloud synced data (Google Play requirement)'),
+                  title: const Text('Delete Account & Cloud Data',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold)),
+                  subtitle: const Text(
+                      'Permanently remove your account and all cloud synced data (Google Play requirement)'),
                   onTap: () => _confirmAccountDeletion(context),
                 ),
               ],
@@ -379,20 +429,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           'This action is irreversible. All your personal song settings, band memberships, and cloud records will be permanently erased.',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () async {
               Navigator.pop(ctx);
               try {
                 await ref.read(authServiceProvider).deleteAccount();
-                if (mounted) {
+                if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Account and all cloud data successfully deleted.')),
+                    const SnackBar(
+                        content: Text(
+                            'Account and all cloud data successfully deleted.')),
                   );
                 }
               } catch (e) {
-                if (mounted) {
+                if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Account deletion note: $e')),
                   );

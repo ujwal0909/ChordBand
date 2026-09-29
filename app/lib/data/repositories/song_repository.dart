@@ -39,11 +39,14 @@ class SongRepository {
       songId: Value(songId),
       preferredKey: Value(preferredKey ?? existing?.preferredKey),
       preferredCapo: Value(preferredCapo ?? existing?.preferredCapo ?? 0),
-      displayNashville: Value(displayNashville ?? existing?.displayNashville ?? false),
+      displayNashville:
+          Value(displayNashville ?? existing?.displayNashville ?? false),
       displayRoman: Value(displayRoman ?? existing?.displayRoman ?? false),
       fontSize: Value(fontSize ?? existing?.fontSize ?? 16.0),
-      autoScrollSpeed: Value(autoScrollSpeed ?? existing?.autoScrollSpeed ?? 1.0),
-      selectedLyricVersionId: Value(selectedLyricVersionId ?? existing?.selectedLyricVersionId),
+      autoScrollSpeed:
+          Value(autoScrollSpeed ?? existing?.autoScrollSpeed ?? 1.0),
+      selectedLyricVersionId:
+          Value(selectedLyricVersionId ?? existing?.selectedLyricVersionId),
     ));
   }
 
@@ -189,9 +192,11 @@ Nee [F]krupalo daachina [G]vaadavu
       if (allSongs.isEmpty) return;
 
       SongsTableData findSong(String query, int fallbackIndex) {
-        final match = allSongs.where((s) =>
-            s.title.toLowerCase().contains(query.toLowerCase()) ||
-            s.artist.toLowerCase().contains(query.toLowerCase())).firstOrNull;
+        final match = allSongs
+            .where((s) =>
+                s.title.toLowerCase().contains(query.toLowerCase()) ||
+                s.artist.toLowerCase().contains(query.toLowerCase()))
+            .firstOrNull;
         if (match != null) return match;
         return allSongs[fallbackIndex.clamp(0, allSongs.length - 1)];
       }
@@ -209,7 +214,8 @@ Nee [F]krupalo daachina [G]vaadavu
       await _db.insertSetlist(SetlistsTableCompanion(
         id: Value(setlist1Id),
         title: const Value('Sunday Worship Gathering'),
-        description: const Value('3 Songs • Acoustic worship & celebration order'),
+        description:
+            const Value('3 Songs • Acoustic worship & celebration order'),
         createdAt: Value(now),
         updatedAt: Value(now),
       ));
@@ -249,7 +255,8 @@ Nee [F]krupalo daachina [G]vaadavu
       await _db.insertSetlist(SetlistsTableCompanion(
         id: Value(setlist2Id),
         title: const Value('Acoustic Band Rehearsal'),
-        description: const Value('2 Songs • Live performance showcase repertoire'),
+        description:
+            const Value('2 Songs • Live performance showcase repertoire'),
         createdAt: Value(now),
         updatedAt: Value(now),
       ));

@@ -3,7 +3,9 @@ import 'package:chord_engine/chord_engine.dart';
 
 void main() {
   group('Telugu Unicode Grapheme Cluster Alignment Tests', () {
-    test('treats Telugu base consonant + vowel signs as single atomic grapheme cluster', () {
+    test(
+        'treats Telugu base consonant + vowel signs as single atomic grapheme cluster',
+        () {
       const text = 'కృప'; // Krupa
       final clusters = GraphemeChordAligner.getGraphemeClusters(text);
 
@@ -14,8 +16,11 @@ void main() {
       expect(clusters[1], equals('ప'));
     });
 
-    test('treats complex Telugu conjuncts (e.g. స్త్రీ, క్ష) as single atomic grapheme clusters', () {
-      const text = 'స్త్రీ'; // Stree (Sa + Virama + Ta + Virama + Ra + Vowel II)
+    test(
+        'treats complex Telugu conjuncts (e.g. స్త్రీ, క్ష) as single atomic grapheme clusters',
+        () {
+      const text =
+          'స్త్రీ'; // Stree (Sa + Virama + Ta + Virama + Ra + Vowel II)
       final clusters = GraphemeChordAligner.getGraphemeClusters(text);
       expect(clusters.length, equals(1));
       expect(clusters[0], equals('స్త్రీ'));
@@ -27,7 +32,9 @@ void main() {
       expect(kshaClusters[2], equals('ము'));
     });
 
-    test('aligns plain text chords above Telugu lyrics without splitting conjuncts', () {
+    test(
+        'aligns plain text chords above Telugu lyrics without splitting conjuncts',
+        () {
       const chordLine = 'C       G       Am';
       const lyricLine = 'కృప చూపిన దేవా';
 

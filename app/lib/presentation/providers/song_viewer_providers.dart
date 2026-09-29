@@ -71,10 +71,12 @@ class SongViewerNotifier extends FamilyNotifier<SongViewerState, String> {
     return const SongViewerState();
   }
 
-  void initFromSavedSettings(UserSongSettingsTableData? settings, SongsTableData? song) {
+  void initFromSavedSettings(
+      UserSongSettingsTableData? settings, SongsTableData? song) {
     if (settings != null) {
-      final targetKey = settings.preferredKey != null ? KeySignature.tryParse(settings.preferredKey!) : null;
-      NotationState:
+      final targetKey = settings.preferredKey != null
+          ? KeySignature.tryParse(settings.preferredKey!)
+          : null;
       ChordDisplayNotation not = ChordDisplayNotation.standard;
       if (settings.displayNashville) not = ChordDisplayNotation.nashville;
       if (settings.displayRoman) not = ChordDisplayNotation.roman;
@@ -126,7 +128,8 @@ class SongViewerNotifier extends FamilyNotifier<SongViewerState, String> {
   }
 
   void zoomFont(double scaleFactor) {
-    state = state.copyWith(fontSize: (state.fontSize * scaleFactor).clamp(10.0, 36.0));
+    state = state.copyWith(
+        fontSize: (state.fontSize * scaleFactor).clamp(10.0, 36.0));
   }
 
   void toggleMonospace() {

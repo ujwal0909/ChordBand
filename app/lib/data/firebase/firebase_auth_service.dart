@@ -78,7 +78,8 @@ class FirebaseAuthService {
   }
 
   /// Create an account with email and password
-  Future<UserCredential?> registerWithEmail(String email, String password) async {
+  Future<UserCredential?> registerWithEmail(
+      String email, String password) async {
     final auth = _auth;
     if (auth == null) return null;
     try {

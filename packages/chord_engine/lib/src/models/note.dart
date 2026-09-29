@@ -16,11 +16,33 @@ class Note {
   };
 
   static const List<String> _sharpNotes = [
-    'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+    'C',
+    'C#',
+    'D',
+    'D#',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'G#',
+    'A',
+    'A#',
+    'B'
   ];
 
   static const List<String> _flatNotes = [
-    'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'
+    'C',
+    'Db',
+    'D',
+    'Eb',
+    'E',
+    'F',
+    'Gb',
+    'G',
+    'Ab',
+    'A',
+    'Bb',
+    'B'
   ];
 
   /// The pitch class / semitone value in range [0, 11] where C = 0.
@@ -36,7 +58,9 @@ class Note {
     } else if (accidental == 'bb' || accidental == '𝄫') {
       acc = -2;
     }
-    return (base + acc) % 12 >= 0 ? (base + acc) % 12 : ((base + acc) % 12) + 12;
+    return (base + acc) % 12 >= 0
+        ? (base + acc) % 12
+        : ((base + acc) % 12) + 12;
   }
 
   /// Parse note string like 'C', 'F#', 'Bb', 'G##', 'Dbb', 'E#', 'Cb'
@@ -76,11 +100,13 @@ class Note {
   /// Create a standard note from a semitone [0, 11]
   factory Note.fromSemitone(int semitone, {bool preferFlat = false}) {
     final normalized = (semitone % 12 + 12) % 12;
-    final noteStr = preferFlat ? _flatNotes[normalized] : _sharpNotes[normalized];
+    final noteStr =
+        preferFlat ? _flatNotes[normalized] : _sharpNotes[normalized];
     return Note.parse(noteStr);
   }
 
-  bool get isSharp => accidental == '#' || accidental == '##' || accidental == 'x';
+  bool get isSharp =>
+      accidental == '#' || accidental == '##' || accidental == 'x';
   bool get isFlat => accidental == 'b' || accidental == 'bb';
   bool get isNatural => accidental.isEmpty;
 

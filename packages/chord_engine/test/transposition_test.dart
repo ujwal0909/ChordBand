@@ -33,11 +33,13 @@ void main() {
     test('transposes with target key context for proper musical spelling', () {
       final chord = Chord.parse('A');
       // Transpose +1 into Key of Bb (targetKey: Bb) should spell root as Bb, not A#
-      final inBb = ChordTransposer.transpose(chord, 1, targetKey: KeySignature.keyBFlat);
+      final inBb =
+          ChordTransposer.transpose(chord, 1, targetKey: KeySignature.keyBFlat);
       expect(inBb.root.toString(), equals('Bb'));
 
       // Transpose +1 into Key of B (targetKey: B) should spell as A#
-      final inB = ChordTransposer.transpose(chord, 1, targetKey: KeySignature.keyB);
+      final inB =
+          ChordTransposer.transpose(chord, 1, targetKey: KeySignature.keyB);
       expect(inB.root.toString(), equals('A#'));
     });
 
@@ -53,7 +55,8 @@ void main() {
       expect(playAsD.root.toString(), equals('D'));
 
       // If sounding chord is G and Capo is 0 (no capo), play As G
-      expect(ChordTransposer.toPlayAsShape(Chord.parse('G'), 0).toString(), equals('G'));
+      expect(ChordTransposer.toPlayAsShape(Chord.parse('G'), 0).toString(),
+          equals('G'));
     });
 
     test('computes Capo "Sounds-As" concert pitch correctly', () {
@@ -64,7 +67,8 @@ void main() {
 
       // Guitarist plays G shape with Capo 3 -> sounds as Bb
       final shapeG = Chord.parse('G');
-      final soundingBb = ChordTransposer.toSoundingChord(shapeG, 3, preferFlats: true);
+      final soundingBb =
+          ChordTransposer.toSoundingChord(shapeG, 3, preferFlats: true);
       expect(soundingBb.root.toString(), equals('Bb'));
     });
 

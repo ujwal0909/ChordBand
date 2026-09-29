@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:chord_engine/chord_engine.dart';
-import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/document_text_extractor.dart';
 import '../../../core/utils/key_detector.dart';
 import '../../providers/song_providers.dart';
@@ -17,7 +15,8 @@ class ImportScreen extends ConsumerStatefulWidget {
   ConsumerState<ImportScreen> createState() => _ImportScreenState();
 }
 
-class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerProviderStateMixin {
+class _ImportScreenState extends ConsumerState<ImportScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final _urlController = TextEditingController();
   final _pasteController = TextEditingController();
@@ -39,10 +38,12 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
     super.dispose();
   }
 
-  void _parseFromText(String rawText, {String? sourceName, String? fallbackTitle}) {
+  void _parseFromText(String rawText,
+      {String? sourceName, String? fallbackTitle}) {
     if (rawText.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter or paste chord sheet text first.')),
+        const SnackBar(
+            content: Text('Please enter or paste chord sheet text first.')),
       );
       return;
     }
@@ -53,7 +54,9 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
           : PlainTextParser.parse(rawText);
 
       // Use cleaned file name or provided fallback title if not defined
-      if ((parsed.title.isEmpty || parsed.title == 'Untitled') && fallbackTitle != null && fallbackTitle.isNotEmpty) {
+      if ((parsed.title.isEmpty || parsed.title == 'Untitled') &&
+          fallbackTitle != null &&
+          fallbackTitle.isNotEmpty) {
         parsed = parsed.copyWith(title: fallbackTitle);
       }
 
@@ -75,7 +78,8 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Extracted "${parsed.title.isEmpty ? 'Song' : parsed.title}" (Key: ${parsed.originalKey ?? "C"})! See preview below.'),
+          content: Text(
+              'Extracted "${parsed.title.isEmpty ? 'Song' : parsed.title}" (Key: ${parsed.originalKey ?? "C"})! See preview below.'),
           backgroundColor: Colors.teal,
         ),
       );
@@ -91,7 +95,17 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
       setState(() => _isLoading = true);
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['pdf', 'docx', 'doc', 'txt', 'pro', 'chordpro', 'crd', 'rtf', 'md'],
+        allowedExtensions: [
+          'pdf',
+          'docx',
+          'doc',
+          'txt',
+          'pro',
+          'chordpro',
+          'crd',
+          'rtf',
+          'md'
+        ],
         withData: true,
       );
 
@@ -101,14 +115,17 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
         if (file.bytes == null || file.bytes!.isEmpty) {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Could not read binary data for ${file.name}.')),
+              SnackBar(
+                  content:
+                      Text('Could not read binary data for ${file.name}.')),
             );
           }
           return;
         }
 
         // Use DocumentTextExtractor for decompressed PDF and Word DOCX text extraction
-        final extractedContent = DocumentTextExtractor.extractText(file.bytes!, file.name);
+        final extractedContent =
+            DocumentTextExtractor.extractText(file.bytes!, file.name);
 
         if (extractedContent.trim().isNotEmpty) {
           // Generate clean title from filename
@@ -119,13 +136,16 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
               .trim();
 
           _pasteController.text = extractedContent;
-          _parseFromText(extractedContent, sourceName: file.name, fallbackTitle: cleanTitle);
+          _parseFromText(extractedContent,
+              sourceName: file.name, fallbackTitle: cleanTitle);
           // Switch to paste & preview tab so user immediately sees extracted chords and lyrics
           _tabController.animateTo(0);
         } else {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Could not extract readable text from ${file.name}. You can paste lyrics into the Paste tab.')),
+              SnackBar(
+                  content: Text(
+                      'Could not extract readable text from ${file.name}. You can paste lyrics into the Paste tab.')),
             );
           }
         }
@@ -147,7 +167,9 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
     final url = _urlController.text.trim();
     if (url.isEmpty || !url.startsWith('http')) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a valid URL starting with http:// or https://')),
+        const SnackBar(
+            content: Text(
+                'Please enter a valid URL starting with http:// or https://')),
       );
       return;
     }
@@ -194,6 +216,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
 
   Future<void> _pasteFromClipboard() async {
     final data = await Clipboard.getData('text/plain');
+    if (!mounted) return;
     if (data?.text != null && data!.text!.isNotEmpty) {
       _pasteController.text = data.text!;
       _parseFromText(data.text!, sourceName: 'Clipboard Paste');
@@ -209,8 +232,11 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
 
     final repo = ref.read(songRepositoryProvider);
     final songId = await repo.saveSong(
-      title: _previewSong!.title.isEmpty ? 'Imported Song' : _previewSong!.title,
-      artist: _previewSong!.artist.isEmpty ? 'Unknown Artist' : _previewSong!.artist,
+      title:
+          _previewSong!.title.isEmpty ? 'Imported Song' : _previewSong!.title,
+      artist: _previewSong!.artist.isEmpty
+          ? 'Unknown Artist'
+          : _previewSong!.artist,
       originalKey: _previewSong!.originalKey?.toString() ?? 'C',
       capo: _previewSong!.capo,
       tempo: _previewSong!.tempo,
@@ -265,13 +291,15 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                             children: [
                               const Text(
                                 'Paste Lyrics & Chords from PDF or Word',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 13),
                               ),
                               Row(
                                 children: [
                                   TextButton.icon(
                                     onPressed: _pasteFromClipboard,
-                                    icon: const Icon(Icons.content_paste, size: 16),
+                                    icon: const Icon(Icons.content_paste,
+                                        size: 16),
                                     label: const Text('Paste Clipboard'),
                                   ),
                                   TextButton(
@@ -288,14 +316,16 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                               controller: _pasteController,
                               maxLines: 8,
                               decoration: const InputDecoration(
-                                hintText: 'Paste chords and lyrics here from your PDF, Word doc, or chord website...\n\nExample:\nC                 G\nAmazing grace how sweet the sound...',
+                                hintText:
+                                    'Paste chords and lyrics here from your PDF, Word doc, or chord website...\n\nExample:\nC                 G\nAmazing grace how sweet the sound...',
                                 border: OutlineInputBorder(),
                               ),
                             ),
                           ),
                           const SizedBox(height: 8),
                           FilledButton.icon(
-                            onPressed: () => _parseFromText(_pasteController.text),
+                            onPressed: () =>
+                                _parseFromText(_pasteController.text),
                             icon: const Icon(Icons.auto_fix_high),
                             label: const Text('Auto-Detect & Preview Chords'),
                           ),
@@ -311,11 +341,13 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.file_present, size: 48, color: Colors.blue),
+                          const Icon(Icons.file_present,
+                              size: 48, color: Colors.blue),
                           const SizedBox(height: 12),
                           const Text(
                             'Select Song Document or File',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           const SizedBox(height: 6),
                           const Text(
@@ -343,7 +375,8 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                         children: [
                           const Text(
                             'Import from Public Web Link',
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                           const SizedBox(height: 8),
                           TextField(
@@ -359,7 +392,11 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                           FilledButton.icon(
                             onPressed: _isLoading ? null : _importFromUrl,
                             icon: _isLoading
-                                ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                        strokeWidth: 2))
                                 : const Icon(Icons.download),
                             label: const Text('Fetch & Parse Preview'),
                           ),
@@ -376,7 +413,7 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
             // Live Preview Card
             if (_previewSong != null) ...[
               Card(
-                color: Colors.teal.withOpacity(0.08),
+                color: Colors.teal.withValues(alpha: 0.08),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   side: const BorderSide(color: Colors.teal),
@@ -394,12 +431,17 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _previewSong!.title.isEmpty ? 'Untitled Song' : _previewSong!.title,
-                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                  _previewSong!.title.isEmpty
+                                      ? 'Untitled Song'
+                                      : _previewSong!.title,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   'Artist: ${_previewSong!.artist.isEmpty ? 'Unknown' : _previewSong!.artist} • Key: ${_previewSong!.originalKey ?? "C"}',
-                                  style: const TextStyle(fontSize: 13, color: Colors.teal),
+                                  style: const TextStyle(
+                                      fontSize: 13, color: Colors.teal),
                                 ),
                               ],
                             ),
@@ -414,7 +456,10 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                       const Divider(height: 24),
                       const Text(
                         'Parsed Chord Sheet Preview:',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
                       ),
                       const SizedBox(height: 8),
                       Container(
@@ -427,7 +472,8 @@ class _ImportScreenState extends ConsumerState<ImportScreen> with SingleTickerPr
                           _previewSong!.toChordPro(),
                           maxLines: 10,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontFamily: 'Courier', fontSize: 13, height: 1.4),
+                          style: const TextStyle(
+                              fontFamily: 'Courier', fontSize: 13, height: 1.4),
                         ),
                       ),
                     ],

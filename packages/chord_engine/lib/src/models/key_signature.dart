@@ -20,8 +20,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('C'), const Note('D'), const Note('E'),
-      const Note('F'), const Note('G'), const Note('A'), const Note('B')
+      const Note('C'),
+      const Note('D'),
+      const Note('E'),
+      const Note('F'),
+      const Note('G'),
+      const Note('A'),
+      const Note('B')
     ],
   );
 
@@ -30,8 +35,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('G'), const Note('A'), const Note('B'),
-      const Note('C'), const Note('D'), const Note('E'), const Note('F', '#')
+      const Note('G'),
+      const Note('A'),
+      const Note('B'),
+      const Note('C'),
+      const Note('D'),
+      const Note('E'),
+      const Note('F', '#')
     ],
   );
 
@@ -40,8 +50,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('D'), const Note('E'), const Note('F', '#'),
-      const Note('G'), const Note('A'), const Note('B'), const Note('C', '#')
+      const Note('D'),
+      const Note('E'),
+      const Note('F', '#'),
+      const Note('G'),
+      const Note('A'),
+      const Note('B'),
+      const Note('C', '#')
     ],
   );
 
@@ -50,8 +65,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('A'), const Note('B'), const Note('C', '#'),
-      const Note('D'), const Note('E'), const Note('F', '#'), const Note('G', '#')
+      const Note('A'),
+      const Note('B'),
+      const Note('C', '#'),
+      const Note('D'),
+      const Note('E'),
+      const Note('F', '#'),
+      const Note('G', '#')
     ],
   );
 
@@ -60,8 +80,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('E'), const Note('F', '#'), const Note('G', '#'),
-      const Note('A'), const Note('B'), const Note('C', '#'), const Note('D', '#')
+      const Note('E'),
+      const Note('F', '#'),
+      const Note('G', '#'),
+      const Note('A'),
+      const Note('B'),
+      const Note('C', '#'),
+      const Note('D', '#')
     ],
   );
 
@@ -70,8 +95,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('B'), const Note('C', '#'), const Note('D', '#'),
-      const Note('E'), const Note('F', '#'), const Note('G', '#'), const Note('A', '#')
+      const Note('B'),
+      const Note('C', '#'),
+      const Note('D', '#'),
+      const Note('E'),
+      const Note('F', '#'),
+      const Note('G', '#'),
+      const Note('A', '#')
     ],
   );
 
@@ -80,8 +110,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('F', '#'), const Note('G', '#'), const Note('A', '#'),
-      const Note('B'), const Note('C', '#'), const Note('D', '#'), const Note('E', '#')
+      const Note('F', '#'),
+      const Note('G', '#'),
+      const Note('A', '#'),
+      const Note('B'),
+      const Note('C', '#'),
+      const Note('D', '#'),
+      const Note('E', '#')
     ],
   );
 
@@ -90,8 +125,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: false,
     scaleNotes: [
-      const Note('C', '#'), const Note('D', '#'), const Note('E', '#'),
-      const Note('F', '#'), const Note('G', '#'), const Note('A', '#'), const Note('B', '#')
+      const Note('C', '#'),
+      const Note('D', '#'),
+      const Note('E', '#'),
+      const Note('F', '#'),
+      const Note('G', '#'),
+      const Note('A', '#'),
+      const Note('B', '#')
     ],
   );
 
@@ -100,8 +140,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: true,
     scaleNotes: [
-      const Note('F'), const Note('G'), const Note('A'),
-      const Note('B', 'b'), const Note('C'), const Note('D'), const Note('E')
+      const Note('F'),
+      const Note('G'),
+      const Note('A'),
+      const Note('B', 'b'),
+      const Note('C'),
+      const Note('D'),
+      const Note('E')
     ],
   );
 
@@ -110,8 +155,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: true,
     scaleNotes: [
-      const Note('B', 'b'), const Note('C'), const Note('D'),
-      const Note('E', 'b'), const Note('F'), const Note('G'), const Note('A')
+      const Note('B', 'b'),
+      const Note('C'),
+      const Note('D'),
+      const Note('E', 'b'),
+      const Note('F'),
+      const Note('G'),
+      const Note('A')
     ],
   );
 
@@ -120,8 +170,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: true,
     scaleNotes: [
-      const Note('E', 'b'), const Note('F'), const Note('G'),
-      const Note('A', 'b'), const Note('B', 'b'), const Note('C'), const Note('D')
+      const Note('E', 'b'),
+      const Note('F'),
+      const Note('G'),
+      const Note('A', 'b'),
+      const Note('B', 'b'),
+      const Note('C'),
+      const Note('D')
     ],
   );
 
@@ -130,8 +185,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: true,
     scaleNotes: [
-      const Note('A', 'b'), const Note('B', 'b'), const Note('C'),
-      const Note('D', 'b'), const Note('E', 'b'), const Note('F'), const Note('G')
+      const Note('A', 'b'),
+      const Note('B', 'b'),
+      const Note('C'),
+      const Note('D', 'b'),
+      const Note('E', 'b'),
+      const Note('F'),
+      const Note('G')
     ],
   );
 
@@ -140,8 +200,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: true,
     scaleNotes: [
-      const Note('D', 'b'), const Note('E', 'b'), const Note('F'),
-      const Note('G', 'b'), const Note('A', 'b'), const Note('B', 'b'), const Note('C')
+      const Note('D', 'b'),
+      const Note('E', 'b'),
+      const Note('F'),
+      const Note('G', 'b'),
+      const Note('A', 'b'),
+      const Note('B', 'b'),
+      const Note('C')
     ],
   );
 
@@ -150,8 +215,13 @@ class KeySignature {
     isMinor: false,
     prefersFlats: true,
     scaleNotes: [
-      const Note('G', 'b'), const Note('A', 'b'), const Note('B', 'b'),
-      const Note('C', 'b'), const Note('D', 'b'), const Note('E', 'b'), const Note('F')
+      const Note('G', 'b'),
+      const Note('A', 'b'),
+      const Note('B', 'b'),
+      const Note('C', 'b'),
+      const Note('D', 'b'),
+      const Note('E', 'b'),
+      const Note('F')
     ],
   );
 
@@ -161,8 +231,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: false,
     scaleNotes: [
-      const Note('A'), const Note('B'), const Note('C'),
-      const Note('D'), const Note('E'), const Note('F'), const Note('G')
+      const Note('A'),
+      const Note('B'),
+      const Note('C'),
+      const Note('D'),
+      const Note('E'),
+      const Note('F'),
+      const Note('G')
     ],
   );
 
@@ -171,8 +246,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: false,
     scaleNotes: [
-      const Note('E'), const Note('F', '#'), const Note('G'),
-      const Note('A'), const Note('B'), const Note('C'), const Note('D')
+      const Note('E'),
+      const Note('F', '#'),
+      const Note('G'),
+      const Note('A'),
+      const Note('B'),
+      const Note('C'),
+      const Note('D')
     ],
   );
 
@@ -181,8 +261,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: false,
     scaleNotes: [
-      const Note('B'), const Note('C', '#'), const Note('D'),
-      const Note('E'), const Note('F', '#'), const Note('G'), const Note('A')
+      const Note('B'),
+      const Note('C', '#'),
+      const Note('D'),
+      const Note('E'),
+      const Note('F', '#'),
+      const Note('G'),
+      const Note('A')
     ],
   );
 
@@ -191,8 +276,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: false,
     scaleNotes: [
-      const Note('F', '#'), const Note('G', '#'), const Note('A'),
-      const Note('B'), const Note('C', '#'), const Note('D'), const Note('E')
+      const Note('F', '#'),
+      const Note('G', '#'),
+      const Note('A'),
+      const Note('B'),
+      const Note('C', '#'),
+      const Note('D'),
+      const Note('E')
     ],
   );
 
@@ -201,8 +291,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: false,
     scaleNotes: [
-      const Note('C', '#'), const Note('D', '#'), const Note('E'),
-      const Note('F', '#'), const Note('G', '#'), const Note('A'), const Note('B')
+      const Note('C', '#'),
+      const Note('D', '#'),
+      const Note('E'),
+      const Note('F', '#'),
+      const Note('G', '#'),
+      const Note('A'),
+      const Note('B')
     ],
   );
 
@@ -211,8 +306,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: false,
     scaleNotes: [
-      const Note('G', '#'), const Note('A', '#'), const Note('B'),
-      const Note('C', '#'), const Note('D', '#'), const Note('E'), const Note('F', '#')
+      const Note('G', '#'),
+      const Note('A', '#'),
+      const Note('B'),
+      const Note('C', '#'),
+      const Note('D', '#'),
+      const Note('E'),
+      const Note('F', '#')
     ],
   );
 
@@ -221,8 +321,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: true,
     scaleNotes: [
-      const Note('D'), const Note('E'), const Note('F'),
-      const Note('G'), const Note('A'), const Note('B', 'b'), const Note('C')
+      const Note('D'),
+      const Note('E'),
+      const Note('F'),
+      const Note('G'),
+      const Note('A'),
+      const Note('B', 'b'),
+      const Note('C')
     ],
   );
 
@@ -231,8 +336,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: true,
     scaleNotes: [
-      const Note('G'), const Note('A'), const Note('B', 'b'),
-      const Note('C'), const Note('D'), const Note('E', 'b'), const Note('F')
+      const Note('G'),
+      const Note('A'),
+      const Note('B', 'b'),
+      const Note('C'),
+      const Note('D'),
+      const Note('E', 'b'),
+      const Note('F')
     ],
   );
 
@@ -241,8 +351,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: true,
     scaleNotes: [
-      const Note('C'), const Note('D'), const Note('E', 'b'),
-      const Note('F'), const Note('G'), const Note('A', 'b'), const Note('B', 'b')
+      const Note('C'),
+      const Note('D'),
+      const Note('E', 'b'),
+      const Note('F'),
+      const Note('G'),
+      const Note('A', 'b'),
+      const Note('B', 'b')
     ],
   );
 
@@ -251,8 +366,13 @@ class KeySignature {
     isMinor: true,
     prefersFlats: true,
     scaleNotes: [
-      const Note('F'), const Note('G'), const Note('A', 'b'),
-      const Note('B', 'b'), const Note('C'), const Note('D', 'b'), const Note('E', 'b')
+      const Note('F'),
+      const Note('G'),
+      const Note('A', 'b'),
+      const Note('B', 'b'),
+      const Note('C'),
+      const Note('D', 'b'),
+      const Note('E', 'b')
     ],
   );
 
@@ -261,16 +381,42 @@ class KeySignature {
     isMinor: true,
     prefersFlats: true,
     scaleNotes: [
-      const Note('B', 'b'), const Note('C'), const Note('D', 'b'),
-      const Note('E', 'b'), const Note('F'), const Note('G', 'b'), const Note('A', 'b')
+      const Note('B', 'b'),
+      const Note('C'),
+      const Note('D', 'b'),
+      const Note('E', 'b'),
+      const Note('F'),
+      const Note('G', 'b'),
+      const Note('A', 'b')
     ],
   );
 
   static final List<KeySignature> allKeys = [
-    keyC, keyG, keyD, keyA, keyE, keyB, keyFSharp, keyCSharp,
-    keyF, keyBFlat, keyEFlat, keyAFlat, keyDFlat, keyGFlat,
-    keyAm, keyEm, keyBm, keyFSharpM, keyCSharpM, keyGSharpM,
-    keyDm, keyGm, keyCm, keyFm, keyBbm,
+    keyC,
+    keyG,
+    keyD,
+    keyA,
+    keyE,
+    keyB,
+    keyFSharp,
+    keyCSharp,
+    keyF,
+    keyBFlat,
+    keyEFlat,
+    keyAFlat,
+    keyDFlat,
+    keyGFlat,
+    keyAm,
+    keyEm,
+    keyBm,
+    keyFSharpM,
+    keyCSharpM,
+    keyGSharpM,
+    keyDm,
+    keyGm,
+    keyCm,
+    keyFm,
+    keyBbm,
   ];
 
   /// Find key signature by name (e.g. "C", "G", "F#m", "Bb", "Abm")
@@ -279,7 +425,8 @@ class KeySignature {
     if (trimmed.isEmpty) return null;
 
     final isMinorKey = trimmed.endsWith('m') && !trimmed.endsWith('maj');
-    final rootPart = isMinorKey ? trimmed.substring(0, trimmed.length - 1) : trimmed;
+    final rootPart =
+        isMinorKey ? trimmed.substring(0, trimmed.length - 1) : trimmed;
     final rootNote = Note.tryParse(rootPart);
     if (rootNote == null) return null;
 

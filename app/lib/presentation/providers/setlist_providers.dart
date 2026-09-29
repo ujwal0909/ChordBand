@@ -17,7 +17,8 @@ class SetlistRepository {
   Stream<List<SetlistItemsTableData>> watchSetlistItems(String setlistId) =>
       _db.watchSetlistItems(setlistId);
 
-  Future<String> createSetlist({required String title, String? description, String? groupId}) async {
+  Future<String> createSetlist(
+      {required String title, String? description, String? groupId}) async {
     final id = _uuid.v4();
     final now = DateTime.now();
     await _db.insertSetlist(SetlistsTableCompanion(
@@ -51,7 +52,8 @@ class SetlistRepository {
     ));
   }
 
-  Future<void> deleteSetlistItem(String itemId) => _db.deleteSetlistItem(itemId);
+  Future<void> deleteSetlistItem(String itemId) =>
+      _db.deleteSetlistItem(itemId);
 
   Future<void> deleteSetlist(String id) => _db.deleteSetlist(id);
 }
@@ -61,13 +63,15 @@ final setlistRepositoryProvider = Provider<SetlistRepository>((ref) {
   return SetlistRepository(db);
 });
 
-final allSetlistsStreamProvider = StreamProvider<List<SetlistsTableData>>((ref) {
+final allSetlistsStreamProvider =
+    StreamProvider<List<SetlistsTableData>>((ref) {
   final repo = ref.watch(setlistRepositoryProvider);
   return repo.watchSetlists();
 });
 
 final setlistItemsStreamProvider =
-    StreamProvider.family<List<SetlistItemsTableData>, String>((ref, setlistId) {
+    StreamProvider.family<List<SetlistItemsTableData>, String>(
+        (ref, setlistId) {
   final repo = ref.watch(setlistRepositoryProvider);
   return repo.watchSetlistItems(setlistId);
 });

@@ -4,13 +4,15 @@ enum InstrumentType { guitar, ukulele, piano }
 class ChordDiagram {
   final String chordName;
   final InstrumentType instrument;
-  
+
   // String instruments (Guitar: 6 strings, Ukulele: 4 strings)
   // String index 0 is lowest pitch string (e.g. 6th string for guitar = low E)
   // -1 indicates muted ('x'), 0 indicates open ('o'), >0 is fret number
   final List<int> frets;
-  final List<int>? fingers; // 1: Index, 2: Middle, 3: Ring, 4: Pinky, 0/null: None
-  final int baseFret; // Fret position for diagram (usually 1, higher for barre chords)
+  final List<int>?
+      fingers; // 1: Index, 2: Middle, 3: Ring, 4: Pinky, 0/null: None
+  final int
+      baseFret; // Fret position for diagram (usually 1, higher for barre chords)
   final int? barreFret;
   final int? barreFromString;
   final int? barreToString;

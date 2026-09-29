@@ -32,7 +32,8 @@ class AppColors {
   static const Color stageTextPrimary = Color(0xFFFFFFFF);
   static const Color stageTextSecondary = Color(0xFFBBBBBB);
   static const Color stageBorder = Color(0xFF333333);
-  static const Color stageChord = Color(0xFF00FFA3); // Neon Mint Green for Chords
+  static const Color stageChord =
+      Color(0xFF00FFA3); // Neon Mint Green for Chords
   static const Color stageChordAccent = Color(0xFFFFD600); // Neon Gold
   static const Color stageSectionBadge = Color(0xFFFF007A); // Neon Pink
 }

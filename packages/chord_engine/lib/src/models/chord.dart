@@ -3,7 +3,8 @@ import 'note.dart';
 /// Represents a musical chord with root note, quality, alterations, and optional slash bass note.
 class Chord {
   final Note root;
-  final String quality; // '', 'm', '7', 'maj7', 'm7', 'dim', 'dim7', 'aug', 'sus4', 'sus2', 'add9', 'm7b5', '5', etc.
+  final String
+      quality; // '', 'm', '7', 'maj7', 'm7', 'dim', 'dim7', 'aug', 'sus4', 'sus2', 'add9', 'm7b5', '5', etc.
   final Note? bass; // Optional bass note for slash chords like D/F#
 
   const Chord({

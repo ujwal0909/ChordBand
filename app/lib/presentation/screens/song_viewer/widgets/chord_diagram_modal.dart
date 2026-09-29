@@ -12,14 +12,16 @@ class ChordDiagramModal extends StatefulWidget {
     this.isStageMode = false,
   });
 
-  static Future<void> show(BuildContext context, Chord chord, {bool isStageMode = false}) {
+  static Future<void> show(BuildContext context, Chord chord,
+      {bool isStageMode = false}) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: isStageMode ? AppColors.stageSurface : null,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (ctx) => ChordDiagramModal(chord: chord, isStageMode: isStageMode),
+      builder: (ctx) =>
+          ChordDiagramModal(chord: chord, isStageMode: isStageMode),
     );
   }
 
@@ -27,7 +29,8 @@ class ChordDiagramModal extends StatefulWidget {
   State<ChordDiagramModal> createState() => _ChordDiagramModalState();
 }
 
-class _ChordDiagramModalState extends State<ChordDiagramModal> with SingleTickerProviderStateMixin {
+class _ChordDiagramModalState extends State<ChordDiagramModal>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -48,7 +51,8 @@ class _ChordDiagramModalState extends State<ChordDiagramModal> with SingleTicker
     final ukuleleDiagram = UkuleleDiagrams.getDiagram(widget.chord);
     final pianoDiagram = PianoDiagrams.getDiagram(widget.chord);
 
-    final titleColor = widget.isStageMode ? AppColors.stageChord : AppColors.primary;
+    final titleColor =
+        widget.isStageMode ? AppColors.stageChord : AppColors.primary;
 
     return SafeArea(
       child: Padding(
@@ -61,7 +65,7 @@ class _ChordDiagramModalState extends State<ChordDiagramModal> with SingleTicker
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.4),
+                color: Colors.grey.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -178,12 +182,12 @@ class FretboardPainter extends CustomPainter {
         ),
       );
       textPainter.layout();
-      textPainter.paint(canvas, Offset(2, topMargin + 4));
+      textPainter.paint(canvas, const Offset(2, topMargin + 4));
     }
 
     // Draw Nut / Top fret
     canvas.drawLine(
-      Offset(leftMargin, topMargin),
+      const Offset(leftMargin, topMargin),
       Offset(leftMargin + (stringCount - 1) * stringSpacing, topMargin),
       nutPaint,
     );
@@ -224,7 +228,8 @@ class FretboardPainter extends CustomPainter {
           ),
         );
         textPainter.layout();
-        textPainter.paint(canvas, Offset(x - textPainter.width / 2, topMargin - 22));
+        textPainter.paint(
+            canvas, Offset(x - textPainter.width / 2, topMargin - 22));
       } else if (fret == 0) {
         // Open 'O'
         textPainter.text = TextSpan(
@@ -236,7 +241,8 @@ class FretboardPainter extends CustomPainter {
           ),
         );
         textPainter.layout();
-        textPainter.paint(canvas, Offset(x - textPainter.width / 2, topMargin - 24));
+        textPainter.paint(
+            canvas, Offset(x - textPainter.width / 2, topMargin - 24));
       } else {
         // Fretted dot
         final relativeFret = fret - (diagram.baseFret - 1);
@@ -245,7 +251,9 @@ class FretboardPainter extends CustomPainter {
           canvas.drawCircle(Offset(x, y), 8, dotPaint);
 
           // Finger number if provided
-          if (diagram.fingers != null && s < diagram.fingers!.length && diagram.fingers![s] > 0) {
+          if (diagram.fingers != null &&
+              s < diagram.fingers!.length &&
+              diagram.fingers![s] > 0) {
             textPainter.text = TextSpan(
               text: '${diagram.fingers![s]}',
               style: const TextStyle(
@@ -255,7 +263,8 @@ class FretboardPainter extends CustomPainter {
               ),
             );
             textPainter.layout();
-            textPainter.paint(canvas, Offset(x - textPainter.width / 2, y - textPainter.height / 2));
+            textPainter.paint(canvas,
+                Offset(x - textPainter.width / 2, y - textPainter.height / 2));
           }
         }
       }
@@ -307,15 +316,20 @@ class PianoKeyboardPainter extends CustomPainter {
     // Draw White Keys
     for (int i = 0; i < whiteKeyCount; i++) {
       final semitone = _whiteKeySemitones[i];
-      final rect = Rect.fromLTWH(i * whiteKeyWidth, 0, whiteKeyWidth, whiteKeyHeight);
+      final rect =
+          Rect.fromLTWH(i * whiteKeyWidth, 0, whiteKeyWidth, whiteKeyHeight);
       final isPressed = activeKeys.contains(semitone);
 
       final fillPaint = Paint()
-        ..color = isPressed ? highlightPaint.color : (isStageMode ? const Color(0xFF222222) : Colors.white)
+        ..color = isPressed
+            ? highlightPaint.color
+            : (isStageMode ? const Color(0xFF222222) : Colors.white)
         ..style = PaintingStyle.fill;
 
-      canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(3)), fillPaint);
-      canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(3)), whiteKeyBorder);
+      canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(3)), fillPaint);
+      canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(3)),
+          whiteKeyBorder);
     }
 
     // Draw Black Keys
@@ -330,14 +344,18 @@ class PianoKeyboardPainter extends CustomPainter {
       final isPressed = activeKeys.contains(semitone);
 
       final fillPaint = Paint()
-        ..color = isPressed ? (isStageMode ? AppColors.stageChordAccent : AppColors.secondary) : Colors.black
+        ..color = isPressed
+            ? (isStageMode ? AppColors.stageChordAccent : AppColors.secondary)
+            : Colors.black
         ..style = PaintingStyle.fill;
 
-      canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(2)), fillPaint);
+      canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(2)), fillPaint);
     }
   }
 
   @override
   bool shouldRepaint(covariant PianoKeyboardPainter oldDelegate) =>
-      oldDelegate.activeKeys != activeKeys || oldDelegate.isStageMode != isStageMode;
+      oldDelegate.activeKeys != activeKeys ||
+      oldDelegate.isStageMode != isStageMode;
 }

@@ -4,12 +4,18 @@ import 'package:chord_engine/chord_engine.dart';
 void main() {
   group('Enharmonics & Key Signatures Tests', () {
     test('enharmonic equality recognizes equivalent pitches', () {
-      expect(const Note('C', '#').enharmonicallyEquals(const Note('D', 'b')), isTrue);
-      expect(const Note('F', '#').enharmonicallyEquals(const Note('G', 'b')), isTrue);
-      expect(const Note('E', '#').enharmonicallyEquals(const Note('F')), isTrue);
-      expect(const Note('B', '#').enharmonicallyEquals(const Note('C')), isTrue);
-      expect(const Note('F', 'b').enharmonicallyEquals(const Note('E')), isTrue);
-      expect(const Note('C', 'b').enharmonicallyEquals(const Note('B')), isTrue);
+      expect(const Note('C', '#').enharmonicallyEquals(const Note('D', 'b')),
+          isTrue);
+      expect(const Note('F', '#').enharmonicallyEquals(const Note('G', 'b')),
+          isTrue);
+      expect(
+          const Note('E', '#').enharmonicallyEquals(const Note('F')), isTrue);
+      expect(
+          const Note('B', '#').enharmonicallyEquals(const Note('C')), isTrue);
+      expect(
+          const Note('F', 'b').enharmonicallyEquals(const Note('E')), isTrue);
+      expect(
+          const Note('C', 'b').enharmonicallyEquals(const Note('B')), isTrue);
     });
 
     test('exact note equality differentiates enharmonic spellings', () {
@@ -45,13 +51,16 @@ void main() {
 
     test('Minor key diatonic spelling: Dm, Bm, and Bbm', () {
       final keyDm = KeySignature.keyDm;
-      expect(keyDm.spellSemitone(10), equals(const Note('B', 'b'))); // Bb in D minor
+      expect(keyDm.spellSemitone(10),
+          equals(const Note('B', 'b'))); // Bb in D minor
 
       final keyBm = KeySignature.keyBm;
-      expect(keyBm.spellSemitone(1), equals(const Note('C', '#'))); // C# in B minor
+      expect(keyBm.spellSemitone(1),
+          equals(const Note('C', '#'))); // C# in B minor
 
       final keyBbm = KeySignature.keyBbm;
-      expect(keyBbm.spellSemitone(1), equals(const Note('D', 'b'))); // Db in Bb minor
+      expect(keyBbm.spellSemitone(1),
+          equals(const Note('D', 'b'))); // Db in Bb minor
     });
 
     test('parses key signatures by name', () {

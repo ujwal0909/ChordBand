@@ -65,7 +65,9 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
 
         if (current + step >= maxScroll) {
           _scrollController.jumpTo(maxScroll);
-          ref.read(songViewerProvider(widget.songId).notifier).toggleAutoScroll();
+          ref
+              .read(songViewerProvider(widget.songId).notifier)
+              .toggleAutoScroll();
           timer.cancel();
         } else {
           _scrollController.jumpTo(current + step);
@@ -116,14 +118,16 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
   @override
   Widget build(BuildContext context) {
     final songAsync = ref.watch(singleSongStreamProvider(widget.songId));
-    final lyricVersionsAsync = ref.watch(lyricVersionsStreamProvider(widget.songId));
+    final lyricVersionsAsync =
+        ref.watch(lyricVersionsStreamProvider(widget.songId));
     final viewerState = ref.watch(songViewerProvider(widget.songId));
     final viewerNotifier = ref.read(songViewerProvider(widget.songId).notifier);
     final themeMode = ref.watch(themeModeProvider);
     final isStageMode = themeMode == AppThemeMode.stage;
 
     // React to auto-scroll state change
-    ref.listen<SongViewerState>(songViewerProvider(widget.songId), (prev, next) {
+    ref.listen<SongViewerState>(songViewerProvider(widget.songId),
+        (prev, next) {
       if (prev?.isAutoScrolling != next.isAutoScrolling ||
           prev?.autoScrollSpeed != next.autoScrollSpeed) {
         _startOrStopAutoScroll();
@@ -131,8 +135,10 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
     });
 
     return songAsync.when(
-      loading: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (err, stack) => Scaffold(body: Center(child: Text('Error loading song: $err'))),
+      loading: () =>
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
+      error: (err, stack) =>
+          Scaffold(body: Center(child: Text('Error loading song: $err'))),
       data: (song) {
         if (song == null) {
           return const Scaffold(body: Center(child: Text('Song not found')));
@@ -173,7 +179,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
             autofocus: true,
             onKeyEvent: _handleKeyEvent,
             child: Scaffold(
-              backgroundColor: isStageMode ? Colors.black : const Color(0xFF111418),
+              backgroundColor:
+                  isStageMode ? Colors.black : const Color(0xFF111418),
               body: Stack(
                 children: [
                   Center(
@@ -181,7 +188,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                       constraints: const BoxConstraints(maxWidth: 1100),
                       child: ListView(
                         controller: _scrollController,
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 56),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 56),
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -202,13 +210,15 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                                     const SizedBox(height: 4),
                                     Text(
                                       song.artist,
-                                      style: const TextStyle(fontSize: 18, color: Colors.white70),
+                                      style: const TextStyle(
+                                          fontSize: 18, color: Colors.white70),
                                     ),
                                   ],
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 8),
                                 decoration: BoxDecoration(
                                   color: AppColors.stageChord,
                                   borderRadius: BorderRadius.circular(10),
@@ -225,7 +235,10 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                             ],
                           ),
                           const Divider(color: Colors.white24, height: 36),
-                          ...transposedSong.sections.asMap().entries.map((entry) {
+                          ...transposedSong.sections
+                              .asMap()
+                              .entries
+                              .map((entry) {
                             return _buildSectionWidget(
                               section: entry.value,
                               index: entry.key,
@@ -246,8 +259,12 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton.filledTonal(
-                          icon: Icon(viewerState.isAutoScrolling ? Icons.pause : Icons.play_arrow),
-                          tooltip: viewerState.isAutoScrolling ? 'Pause Auto-Scroll' : 'Play Auto-Scroll',
+                          icon: Icon(viewerState.isAutoScrolling
+                              ? Icons.pause
+                              : Icons.play_arrow),
+                          tooltip: viewerState.isAutoScrolling
+                              ? 'Pause Auto-Scroll'
+                              : 'Play Auto-Scroll',
                           onPressed: () => viewerNotifier.toggleAutoScroll(),
                         ),
                         const SizedBox(width: 10),
@@ -258,7 +275,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                           ),
                           icon: const Icon(Icons.fullscreen_exit, size: 20),
                           label: const Text('Exit Presentation (Esc)'),
-                          onPressed: () => setState(() => _isPresentationMode = false),
+                          onPressed: () =>
+                              setState(() => _isPresentationMode = false),
                         ),
                       ],
                     ),
@@ -346,7 +364,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                 // External Display Presentation Mode
                 IconButton(
                   icon: const Icon(Icons.cast_connected),
-                  tooltip: 'External Display Presentation Mode\n(Fullscreen stage monitor displaying only large lyrics & chords)',
+                  tooltip:
+                      'External Display Presentation Mode\n(Fullscreen stage monitor displaying only large lyrics & chords)',
                   onPressed: () {
                     setState(() => _isPresentationMode = true);
                   },
@@ -356,7 +375,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                 IconButton(
                   icon: const Icon(Icons.share),
                   tooltip: 'Share Song / Export Chords',
-                  onPressed: () => _showShareDialog(context, song, transposedSong, displayKey),
+                  onPressed: () => _showShareDialog(
+                      context, song, transposedSong, displayKey),
                 ),
 
                 // Stage Mode Switch
@@ -400,7 +420,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                         },
                         onScaleUpdate: (details) {
                           if (details.scale != 1.0) {
-                            viewerNotifier.setFontSize(_baseFontSize * details.scale);
+                            viewerNotifier
+                                .setFontSize(_baseFontSize * details.scale);
                           }
                         },
                         child: ListView(
@@ -408,14 +429,19 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                           padding: const EdgeInsets.fromLTRB(16, 12, 16, 110),
                           children: [
                             // Song Metadata Header Card
-                            _buildHeaderCard(song, transposedSong, displayKey, isStageMode),
+                            _buildHeaderCard(
+                                song, transposedSong, displayKey, isStageMode),
                             const SizedBox(height: 16),
 
                             // Sections and Lines
-                            ...transposedSong.sections.asMap().entries.map((entry) {
+                            ...transposedSong.sections
+                                .asMap()
+                                .entries
+                                .map((entry) {
                               final index = entry.key;
                               final section = entry.value;
-                              final isCollapsed = _collapsedSectionIndices.contains(index);
+                              final isCollapsed =
+                                  _collapsedSectionIndices.contains(index);
 
                               return _buildSectionWidget(
                                 section: section,
@@ -439,8 +465,10 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                           child: AutoScrollBar(
                             state: viewerState,
                             isStageMode: isStageMode,
-                            onToggleScroll: () => viewerNotifier.toggleAutoScroll(),
-                            onSpeedChanged: (s) => viewerNotifier.setAutoScrollSpeed(s),
+                            onToggleScroll: () =>
+                                viewerNotifier.toggleAutoScroll(),
+                            onSpeedChanged: (s) =>
+                                viewerNotifier.setAutoScrollSpeed(s),
                             onZoomIn: () => viewerNotifier.zoomFont(1.1),
                             onZoomOut: () => viewerNotifier.zoomFont(0.9),
                             onScrollToTop: () {
@@ -479,16 +507,21 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
   ) {
     final capoSuffix = parsed.capo > 0 ? ' • Capo: ${parsed.capo}' : '';
     final tempoSuffix = parsed.tempo != null ? ' • ${parsed.tempo} BPM' : '';
-    final timeSuffix = parsed.timeSignature != null ? ' • ${parsed.timeSignature}' : '';
+    final timeSuffix =
+        parsed.timeSignature != null ? ' • ${parsed.timeSignature}' : '';
 
     return Container(
       padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.only(top: 48), // Padding below top transposition bar
+      margin:
+          const EdgeInsets.only(top: 48), // Padding below top transposition bar
       decoration: BoxDecoration(
-        color: isStageMode ? AppColors.stageSurface : Theme.of(context).cardColor,
+        color:
+            isStageMode ? AppColors.stageSurface : Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: isStageMode ? AppColors.stageBorder : Theme.of(context).dividerColor,
+          color: isStageMode
+              ? AppColors.stageBorder
+              : Theme.of(context).dividerColor,
         ),
       ),
       child: Row(
@@ -500,7 +533,9 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
-                color: isStageMode ? AppColors.stageChordAccent : AppColors.primary,
+                color: isStageMode
+                    ? AppColors.stageChordAccent
+                    : AppColors.primary,
               ),
             ),
           ),
@@ -517,7 +552,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
     required KeySignature displayKey,
     required bool isStageMode,
   }) {
-    final sectionBadgeColor = isStageMode ? AppColors.stageSectionBadge : AppColors.secondary;
+    final sectionBadgeColor =
+        isStageMode ? AppColors.stageSectionBadge : AppColors.secondary;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -541,11 +577,13 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: sectionBadgeColor.withOpacity(0.18),
+                      color: sectionBadgeColor.withValues(alpha: 0.18),
                       borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: sectionBadgeColor.withOpacity(0.4)),
+                      border: Border.all(
+                          color: sectionBadgeColor.withValues(alpha: 0.4)),
                     ),
                     child: Text(
                       section.title.toUpperCase(),
@@ -559,7 +597,9 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
                   ),
                   const SizedBox(width: 8),
                   Icon(
-                    isCollapsed ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
+                    isCollapsed
+                        ? Icons.keyboard_arrow_down
+                        : Icons.keyboard_arrow_up,
                     size: 18,
                     color: Colors.grey,
                   ),
@@ -599,29 +639,35 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
           child: Wrap(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
                   'Share "${song.title}"',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.copy),
                 title: const Text('Copy Chords & Lyrics to Clipboard'),
-                subtitle: Text('Current Key: ${displayKey.toString()} • Formatted with brackets'),
+                subtitle: Text(
+                    'Current Key: ${displayKey.toString()} • Formatted with brackets'),
                 onTap: () {
-                  Clipboard.setData(ClipboardData(text: transposedSong.toChordPro()));
+                  Clipboard.setData(
+                      ClipboardData(text: transposedSong.toChordPro()));
                   Navigator.pop(ctx);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Chords & lyrics copied to clipboard!')),
+                    const SnackBar(
+                        content: Text('Chords & lyrics copied to clipboard!')),
                   );
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.podcasts),
                 title: const Text('Broadcast to Live Stage Session'),
-                subtitle: const Text('Follow-the-Leader: Band members follow your key & song'),
+                subtitle: const Text(
+                    'Follow-the-Leader: Band members follow your key & song'),
                 onTap: () {
                   Navigator.pop(ctx);
                   context.push('/live');
@@ -630,7 +676,8 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
               ListTile(
                 leading: const Icon(Icons.playlist_add),
                 title: const Text('Add to Setlist'),
-                subtitle: const Text('Include in Sunday service or rehearsal setlist'),
+                subtitle: const Text(
+                    'Include in Sunday service or rehearsal setlist'),
                 onTap: () {
                   Navigator.pop(ctx);
                   context.push('/setlists');
@@ -643,4 +690,3 @@ class _SongViewerScreenState extends ConsumerState<SongViewerScreen> {
     );
   }
 }
-

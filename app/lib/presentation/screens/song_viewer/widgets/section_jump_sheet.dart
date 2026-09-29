@@ -44,7 +44,8 @@ class SectionJumpSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleColor = isStageMode ? AppColors.stageChordAccent : AppColors.primary;
+    final titleColor =
+        isStageMode ? AppColors.stageChordAccent : AppColors.primary;
 
     return SafeArea(
       child: Padding(
@@ -58,7 +59,7 @@ class SectionJumpSheet extends StatelessWidget {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.4),
+                  color: Colors.grey.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -92,7 +93,8 @@ class SectionJumpSheet extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
                       radius: 16,
-                      backgroundColor: _getSectionColor(section.sectionType, isStageMode),
+                      backgroundColor:
+                          _getSectionColor(section.sectionType, isStageMode),
                       child: Text(
                         _getSectionAbbreviation(section.sectionType),
                         style: const TextStyle(
@@ -115,13 +117,17 @@ class SectionJumpSheet extends StatelessWidget {
                         IconButton(
                           icon: Icon(
                             isCollapsed ? Icons.unfold_more : Icons.unfold_less,
-                            color: isStageMode ? Colors.white70 : Colors.black54,
+                            color:
+                                isStageMode ? Colors.white70 : Colors.black54,
                           ),
-                          tooltip: isCollapsed ? 'Expand Section' : 'Collapse Section',
+                          tooltip: isCollapsed
+                              ? 'Expand Section'
+                              : 'Collapse Section',
                           onPressed: () => onToggleCollapse(index),
                         ),
                         IconButton(
-                          icon: Icon(Icons.arrow_forward_ios, size: 16, color: titleColor),
+                          icon: Icon(Icons.arrow_forward_ios,
+                              size: 16, color: titleColor),
                           tooltip: 'Jump to Section',
                           onPressed: () {
                             Navigator.of(context).pop();

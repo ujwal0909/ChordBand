@@ -35,10 +35,22 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
   bool _manualKeyEdited = false;
 
   static const List<String> _chromaticRoots = [
-    'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'
+    'C',
+    'C#',
+    'D',
+    'Eb',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'Ab',
+    'A',
+    'Bb',
+    'B'
   ];
 
-  String get _currentChord => '${_chromaticRoots[_chordPitchIndex]}$_chordQuality';
+  String get _currentChord =>
+      '${_chromaticRoots[_chordPitchIndex]}$_chordQuality';
 
   @override
   void initState() {
@@ -53,7 +65,9 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
       if (detected != null && detected != _autoDetectedKey) {
         setState(() {
           _autoDetectedKey = detected;
-          if (!_manualKeyEdited || _keyController.text.isEmpty || _keyController.text == 'C') {
+          if (!_manualKeyEdited ||
+              _keyController.text.isEmpty ||
+              _keyController.text == 'C') {
             _keyController.text = detected;
           }
         });
@@ -75,15 +89,20 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
 
   void _stepChordPitch(int direction) {
     setState(() {
-      _chordPitchIndex = (_chordPitchIndex + direction + _chromaticRoots.length) % _chromaticRoots.length;
+      _chordPitchIndex =
+          (_chordPitchIndex + direction + _chromaticRoots.length) %
+              _chromaticRoots.length;
     });
   }
 
   void _stepKeyPitch(int semitones) {
-    final currentKey = KeySignature.tryParse(_keyController.text.trim()) ?? KeySignature.keyC;
+    final currentKey =
+        KeySignature.tryParse(_keyController.text.trim()) ?? KeySignature.keyC;
     final newTonic = NoteTransposer.transpose(currentKey.tonic, semitones);
-    final newKey = KeySignature.tryParse('$newTonic${currentKey.isMinor ? "m" : ""}');
-    final newKeyName = newKey?.toString() ?? '$newTonic${currentKey.isMinor ? "m" : ""}';
+    final newKey =
+        KeySignature.tryParse('$newTonic${currentKey.isMinor ? "m" : ""}');
+    final newKeyName =
+        newKey?.toString() ?? '$newTonic${currentKey.isMinor ? "m" : ""}';
     setState(() {
       _keyController.text = newKeyName;
       _manualKeyEdited = true;
@@ -108,8 +127,10 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
     final currentKey = KeySignature.tryParse(_keyController.text.trim());
     if (currentKey != null) {
       final newTonic = NoteTransposer.transpose(currentKey.tonic, semitones);
-      final newKey = KeySignature.tryParse('$newTonic${currentKey.isMinor ? "m" : ""}');
-      newKeyName = newKey?.toString() ?? '$newTonic${currentKey.isMinor ? "m" : ""}';
+      final newKey =
+          KeySignature.tryParse('$newTonic${currentKey.isMinor ? "m" : ""}');
+      newKeyName =
+          newKey?.toString() ?? '$newTonic${currentKey.isMinor ? "m" : ""}';
     }
 
     setState(() {
@@ -122,7 +143,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Transposed chords ${semitones > 0 ? "+$semitones" : "$semitones"} semitone(s)${newKeyName != null ? " • Key is now $newKeyName" : ""}'),
+        content: Text(
+            'Transposed chords ${semitones > 0 ? "+$semitones" : "$semitones"} semitone(s)${newKeyName != null ? " • Key is now $newKeyName" : ""}'),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -134,10 +156,12 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
     final chordTag = '[$chord]';
 
     if (selection.isValid && selection.start >= 0) {
-      final newText = text.replaceRange(selection.start, selection.end, chordTag);
+      final newText =
+          text.replaceRange(selection.start, selection.end, chordTag);
       _contentController.value = TextEditingValue(
         text: newText,
-        selection: TextSelection.collapsed(offset: selection.start + chordTag.length),
+        selection:
+            TextSelection.collapsed(offset: selection.start + chordTag.length),
       );
     } else {
       _contentController.text += chordTag;
@@ -150,10 +174,12 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
     final sectionText = '\n{start_of_$tag: $label}\n\n{end_of_$tag}\n';
 
     if (selection.isValid && selection.start >= 0) {
-      final newText = text.replaceRange(selection.start, selection.end, sectionText);
+      final newText =
+          text.replaceRange(selection.start, selection.end, sectionText);
       _contentController.value = TextEditingValue(
         text: newText,
-        selection: TextSelection.collapsed(offset: selection.start + sectionText.length - 15),
+        selection: TextSelection.collapsed(
+            offset: selection.start + sectionText.length - 15),
       );
     } else {
       _contentController.text += sectionText;
@@ -164,7 +190,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
     final raw = _contentController.text;
     if (raw.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please paste or type lyrics and chords first.')),
+        const SnackBar(
+            content: Text('Please paste or type lyrics and chords first.')),
       );
       return;
     }
@@ -182,7 +209,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
         }
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Converted chords & lyrics to ChordPro format!')),
+        const SnackBar(
+            content: Text('Converted chords & lyrics to ChordPro format!')),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -224,7 +252,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
           if (parsed.artist.isNotEmpty && _artistController.text.isEmpty) {
             _artistController.text = parsed.artist;
           }
-          final detected = KeyDetector.detectKeyFromText(_contentController.text);
+          final detected =
+              KeyDetector.detectKeyFromText(_contentController.text);
           if (detected != null) {
             _autoDetectedKey = detected;
             _keyController.text = detected;
@@ -244,7 +273,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
       }
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Pasted and detected chords from clipboard!')),
+          const SnackBar(
+              content: Text('Pasted and detected chords from clipboard!')),
         );
       }
     }
@@ -265,8 +295,11 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
     final savedId = await repo.saveSong(
       id: songId,
       title: title,
-      artist: _artistController.text.trim().isEmpty ? 'Unknown' : _artistController.text.trim(),
-      originalKey: _keyController.text.trim().isEmpty ? 'C' : _keyController.text.trim(),
+      artist: _artistController.text.trim().isEmpty
+          ? 'Unknown'
+          : _artistController.text.trim(),
+      originalKey:
+          _keyController.text.trim().isEmpty ? 'C' : _keyController.text.trim(),
       capo: int.tryParse(_capoController.text.trim()) ?? 0,
       tempo: int.tryParse(_tempoController.text.trim()),
       chordProContent: _contentController.text.trim().isEmpty
@@ -286,7 +319,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeModeProvider);
     final isStageMode = themeMode == AppThemeMode.stage;
-    final primaryAccent = isStageMode ? AppColors.stageChord : AppColors.primary;
+    final primaryAccent =
+        isStageMode ? AppColors.stageChord : AppColors.primary;
 
     // Load existing song data if editing
     if (widget.songId != 'new' && !_isInitialized) {
@@ -382,7 +416,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                   children: [
                                     TextField(
                                       controller: _keyController,
-                                      onChanged: (_) => setState(() => _manualKeyEdited = true),
+                                      onChanged: (_) => setState(
+                                          () => _manualKeyEdited = true),
                                       decoration: InputDecoration(
                                         labelText: 'Musical Key',
                                         hintText: 'C, G, Am',
@@ -392,15 +427,22 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             IconButton(
-                                              icon: const Icon(Icons.remove, size: 16),
-                                              tooltip: 'Lower Key by 1 Semitone (-1 ST)',
-                                              visualDensity: VisualDensity.compact,
-                                              onPressed: () => _stepKeyPitch(-1),
+                                              icon: const Icon(Icons.remove,
+                                                  size: 16),
+                                              tooltip:
+                                                  'Lower Key by 1 Semitone (-1 ST)',
+                                              visualDensity:
+                                                  VisualDensity.compact,
+                                              onPressed: () =>
+                                                  _stepKeyPitch(-1),
                                             ),
                                             IconButton(
-                                              icon: const Icon(Icons.add, size: 16),
-                                              tooltip: 'Raise Key by 1 Semitone (+1 ST)',
-                                              visualDensity: VisualDensity.compact,
+                                              icon: const Icon(Icons.add,
+                                                  size: 16),
+                                              tooltip:
+                                                  'Raise Key by 1 Semitone (+1 ST)',
+                                              visualDensity:
+                                                  VisualDensity.compact,
                                               onPressed: () => _stepKeyPitch(1),
                                             ),
                                           ],
@@ -410,27 +452,38 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                     if (_autoDetectedKey != null) ...[
                                       const SizedBox(height: 6),
                                       Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
                                         decoration: BoxDecoration(
-                                          color: Colors.teal.withOpacity(0.12),
-                                          borderRadius: BorderRadius.circular(6),
-                                          border: Border.all(color: Colors.teal.withOpacity(0.4)),
+                                          color: Colors.teal
+                                              .withValues(alpha: 0.12),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          border: Border.all(
+                                              color: Colors.teal
+                                                  .withValues(alpha: 0.4)),
                                         ),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            const Icon(Icons.auto_awesome, size: 13, color: Colors.teal),
+                                            const Icon(Icons.auto_awesome,
+                                                size: 13, color: Colors.teal),
                                             const SizedBox(width: 4),
                                             Text(
                                               'Detected: $_autoDetectedKey',
-                                              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.teal),
+                                              style: const TextStyle(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.teal),
                                             ),
-                                            if (_keyController.text != _autoDetectedKey) ...[
+                                            if (_keyController.text !=
+                                                _autoDetectedKey) ...[
                                               const SizedBox(width: 6),
                                               InkWell(
                                                 onTap: () {
                                                   setState(() {
-                                                    _keyController.text = _autoDetectedKey!;
+                                                    _keyController.text =
+                                                        _autoDetectedKey!;
                                                     _manualKeyEdited = false;
                                                   });
                                                 },
@@ -440,7 +493,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.teal,
-                                                    decoration: TextDecoration.underline,
+                                                    decoration: TextDecoration
+                                                        .underline,
                                                   ),
                                                 ),
                                               ),
@@ -500,27 +554,33 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                             children: [
                               const Text(
                                 'Chord & Transposition Controls',
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.bold),
                               ),
                               Row(
                                 children: [
                                   OutlinedButton.icon(
                                     onPressed: _pasteFromClipboard,
                                     icon: const Icon(Icons.paste, size: 14),
-                                    label: const Text('Paste PDF/Doc', style: TextStyle(fontSize: 11)),
+                                    label: const Text('Paste PDF/Doc',
+                                        style: TextStyle(fontSize: 11)),
                                     style: OutlinedButton.styleFrom(
                                       visualDensity: VisualDensity.compact,
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
                                     ),
                                   ),
                                   const SizedBox(width: 6),
                                   FilledButton.tonalIcon(
                                     onPressed: _autoFormatPlainTextChords,
-                                    icon: const Icon(Icons.auto_fix_high, size: 14),
-                                    label: const Text('Auto-Format Chords', style: TextStyle(fontSize: 11)),
+                                    icon: const Icon(Icons.auto_fix_high,
+                                        size: 14),
+                                    label: const Text('Auto-Format Chords',
+                                        style: TextStyle(fontSize: 11)),
                                     style: FilledButton.styleFrom(
                                       visualDensity: VisualDensity.compact,
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8),
                                     ),
                                   ),
                                 ],
@@ -531,11 +591,13 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
 
                           // 1. Transpose Song Chords Row (Increase / Decrease Semitone)
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
                             decoration: BoxDecoration(
-                              color: primaryAccent.withOpacity(0.08),
+                              color: primaryAccent.withValues(alpha: 0.08),
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: primaryAccent.withOpacity(0.2)),
+                              border: Border.all(
+                                  color: primaryAccent.withValues(alpha: 0.2)),
                             ),
                             child: Row(
                               children: [
@@ -543,15 +605,19 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                 const SizedBox(width: 8),
                                 const Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Transpose All Chords in Song',
-                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12),
                                       ),
                                       Text(
                                         'Increase or decrease song pitch by semitones',
-                                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                                        style: TextStyle(
+                                            fontSize: 10, color: Colors.grey),
                                       ),
                                     ],
                                   ),
@@ -562,7 +628,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                   label: const Text('-1 ST'),
                                   style: OutlinedButton.styleFrom(
                                     visualDensity: VisualDensity.compact,
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                   ),
                                 ),
                                 const SizedBox(width: 6),
@@ -572,9 +639,12 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                   label: const Text('+1 ST'),
                                   style: FilledButton.styleFrom(
                                     backgroundColor: primaryAccent,
-                                    foregroundColor: isStageMode ? Colors.black : Colors.white,
+                                    foregroundColor: isStageMode
+                                        ? Colors.black
+                                        : Colors.white,
                                     visualDensity: VisualDensity.compact,
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                   ),
                                 ),
                               ],
@@ -587,7 +657,8 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                           Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              border: Border.all(color: Theme.of(context).dividerColor),
+                              border: Border.all(
+                                  color: Theme.of(context).dividerColor),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Column(
@@ -597,12 +668,15 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                   children: [
                                     const Text(
                                       'Insert Chord at Cursor:',
-                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     const Spacer(),
                                     Text(
                                       'Root: ${_chromaticRoots[_chordPitchIndex]}',
-                                      style: const TextStyle(fontSize: 11, color: Colors.grey),
+                                      style: const TextStyle(
+                                          fontSize: 11, color: Colors.grey),
                                     ),
                                   ],
                                 ),
@@ -613,17 +687,21 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                     IconButton.filledTonal(
                                       onPressed: () => _stepChordPitch(-1),
                                       icon: const Icon(Icons.remove),
-                                      tooltip: 'Decrease Chord Pitch (Step Root Down)',
+                                      tooltip:
+                                          'Decrease Chord Pitch (Step Root Down)',
                                       visualDensity: VisualDensity.compact,
                                     ),
                                     const SizedBox(width: 8),
                                     // Current Chord Badge
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 8),
                                       decoration: BoxDecoration(
-                                        color: primaryAccent.withOpacity(0.18),
+                                        color: primaryAccent.withValues(
+                                            alpha: 0.18),
                                         borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(color: primaryAccent),
+                                        border:
+                                            Border.all(color: primaryAccent),
                                       ),
                                       child: Text(
                                         _currentChord,
@@ -639,19 +717,24 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                     IconButton.filledTonal(
                                       onPressed: () => _stepChordPitch(1),
                                       icon: const Icon(Icons.add),
-                                      tooltip: 'Increase Chord Pitch (Step Root Up)',
+                                      tooltip:
+                                          'Increase Chord Pitch (Step Root Up)',
                                       visualDensity: VisualDensity.compact,
                                     ),
                                     const SizedBox(width: 12),
                                     // Insert Button
                                     Expanded(
                                       child: FilledButton.icon(
-                                        onPressed: () => _insertChordAtCursor(_currentChord),
-                                        icon: const Icon(Icons.add_circle, size: 16),
+                                        onPressed: () =>
+                                            _insertChordAtCursor(_currentChord),
+                                        icon: const Icon(Icons.add_circle,
+                                            size: 16),
                                         label: Text('Insert [$_currentChord]'),
                                         style: FilledButton.styleFrom(
                                           backgroundColor: primaryAccent,
-                                          foregroundColor: isStageMode ? Colors.black : Colors.white,
+                                          foregroundColor: isStageMode
+                                              ? Colors.black
+                                              : Colors.white,
                                           visualDensity: VisualDensity.compact,
                                         ),
                                       ),
@@ -664,7 +747,10 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: [
-                                      const Text('Quality: ', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                                      const Text('Quality: ',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.grey)),
                                       ...[
                                         ('', 'Maj'),
                                         ('m', 'Minor (m)'),
@@ -676,12 +762,17 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                                       ].map((q) {
                                         final isSel = _chordQuality == q.$1;
                                         return Padding(
-                                          padding: const EdgeInsets.only(right: 4),
+                                          padding:
+                                              const EdgeInsets.only(right: 4),
                                           child: ChoiceChip(
-                                            label: Text(q.$2, style: const TextStyle(fontSize: 11)),
+                                            label: Text(q.$2,
+                                                style: const TextStyle(
+                                                    fontSize: 11)),
                                             selected: isSel,
-                                            visualDensity: VisualDensity.compact,
-                                            onSelected: (_) => setState(() => _chordQuality = q.$1),
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            onSelected: (_) => setState(
+                                                () => _chordQuality = q.$1),
                                           ),
                                         );
                                       }),
@@ -697,29 +788,41 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                           // 3. Section Structure Buttons
                           Row(
                             children: [
-                              const Text('Sections: ', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                              const Text('Sections: ',
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.grey)),
                               Wrap(
                                 spacing: 6,
                                 children: [
                                   ActionChip(
                                     avatar: const Icon(Icons.tag, size: 14),
-                                    label: const Text('Verse', style: TextStyle(fontSize: 11)),
-                                    onPressed: () => _insertSectionTag('verse', 'Verse 1'),
+                                    label: const Text('Verse',
+                                        style: TextStyle(fontSize: 11)),
+                                    onPressed: () =>
+                                        _insertSectionTag('verse', 'Verse 1'),
                                   ),
                                   ActionChip(
-                                    avatar: const Icon(Icons.music_note, size: 14),
-                                    label: const Text('Chorus', style: TextStyle(fontSize: 11)),
-                                    onPressed: () => _insertSectionTag('chorus', 'Chorus'),
+                                    avatar:
+                                        const Icon(Icons.music_note, size: 14),
+                                    label: const Text('Chorus',
+                                        style: TextStyle(fontSize: 11)),
+                                    onPressed: () =>
+                                        _insertSectionTag('chorus', 'Chorus'),
                                   ),
                                   ActionChip(
-                                    avatar: const Icon(Icons.compare_arrows, size: 14),
-                                    label: const Text('Bridge', style: TextStyle(fontSize: 11)),
-                                    onPressed: () => _insertSectionTag('bridge', 'Bridge'),
+                                    avatar: const Icon(Icons.compare_arrows,
+                                        size: 14),
+                                    label: const Text('Bridge',
+                                        style: TextStyle(fontSize: 11)),
+                                    onPressed: () =>
+                                        _insertSectionTag('bridge', 'Bridge'),
                                   ),
                                   ActionChip(
                                     avatar: const Icon(Icons.logout, size: 14),
-                                    label: const Text('Outro', style: TextStyle(fontSize: 11)),
-                                    onPressed: () => _insertSectionTag('outro', 'Outro'),
+                                    label: const Text('Outro',
+                                        style: TextStyle(fontSize: 11)),
+                                    onPressed: () =>
+                                        _insertSectionTag('outro', 'Outro'),
                                   ),
                                 ],
                               ),
@@ -742,8 +845,10 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                       height: 1.5,
                     ),
                     decoration: InputDecoration(
-                      labelText: 'Song Chords & Lyrics (ChordPro format or Plain Text)',
-                      hintText: '[C]Amazing [F]grace how [C]sweet the sound\nThat [Em]saved a [D]wretch like [G]me...\n\n(Or paste chords on the line above lyrics and tap "Auto-Format Chords")',
+                      labelText:
+                          'Song Chords & Lyrics (ChordPro format or Plain Text)',
+                      hintText:
+                          '[C]Amazing [F]grace how [C]sweet the sound\nThat [Em]saved a [D]wretch like [G]me...\n\n(Or paste chords on the line above lyrics and tap "Auto-Format Chords")',
                       alignLabelWithHint: true,
                       border: const OutlineInputBorder(),
                       fillColor: isStageMode ? AppColors.stageSurface : null,
@@ -757,11 +862,15 @@ class _SongEditScreenState extends ConsumerState<SongEditScreen> {
                   FilledButton.icon(
                     onPressed: _saveSong,
                     icon: const Icon(Icons.check_circle, size: 22),
-                    label: const Text('Save Song to Songbook', style: TextStyle(fontSize: 16)),
+                    label: const Text('Save Song to Songbook',
+                        style: TextStyle(fontSize: 16)),
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: isStageMode ? AppColors.stageChord : AppColors.primary,
-                      foregroundColor: isStageMode ? Colors.black : Colors.white,
+                      backgroundColor: isStageMode
+                          ? AppColors.stageChord
+                          : AppColors.primary,
+                      foregroundColor:
+                          isStageMode ? Colors.black : Colors.white,
                     ),
                   ),
                   const SizedBox(height: 40),

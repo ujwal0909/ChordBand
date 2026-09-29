@@ -13,7 +13,8 @@ class LiveBandScreen extends ConsumerStatefulWidget {
   ConsumerState<LiveBandScreen> createState() => _LiveBandScreenState();
 }
 
-class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTickerProviderStateMixin {
+class _LiveBandScreenState extends ConsumerState<LiveBandScreen>
+    with SingleTickerProviderStateMixin {
   bool _isLeader = false;
   bool _isFollowing = true;
   int _bpm = 100;
@@ -49,7 +50,8 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
     if (_isMetronomeRunning) {
       final intervalMs = (60000 / _bpm).round();
       _metronomeTimer?.cancel();
-      _metronomeTimer = Timer.periodic(Duration(milliseconds: intervalMs), (timer) {
+      _metronomeTimer =
+          Timer.periodic(Duration(milliseconds: intervalMs), (timer) {
         setState(() {
           _currentBeat = (_currentBeat + 1) % _beatsPerMeasure;
         });
@@ -114,10 +116,10 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
           children: [
             // Instructions & Explanation Banner
             Card(
-              color: Colors.indigo.withOpacity(0.08),
+              color: Colors.indigo.withValues(alpha: 0.08),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.indigo.withOpacity(0.3)),
+                side: BorderSide(color: Colors.indigo.withValues(alpha: 0.3)),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(14),
@@ -128,7 +130,9 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                       children: [
                         Icon(Icons.podcasts, color: Colors.indigo, size: 20),
                         SizedBox(width: 8),
-                        Text('Live Stage Performance Mode', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                        Text('Live Stage Performance Mode',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14)),
                       ],
                     ),
                     const SizedBox(height: 6),
@@ -142,7 +146,8 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                         OutlinedButton.icon(
                           onPressed: () => context.push('/groups'),
                           icon: const Icon(Icons.groups, size: 16),
-                          label: const Text('Manage Band Members & Songbooks', style: TextStyle(fontSize: 12)),
+                          label: const Text('Manage Band Members & Songbooks',
+                              style: TextStyle(fontSize: 12)),
                           style: OutlinedButton.styleFrom(
                             visualDensity: VisualDensity.compact,
                           ),
@@ -163,14 +168,20 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.wifi_tethering, color: primaryAccent, size: 28),
+                        Icon(Icons.wifi_tethering,
+                            color: primaryAccent, size: 28),
                         const SizedBox(width: 12),
                         const Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Follow The Leader', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                              Text('Sync active song, section, and key in real time across devices', style: TextStyle(fontSize: 12)),
+                              Text('Follow The Leader',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                  'Sync active song, section, and key in real time across devices',
+                                  style: TextStyle(fontSize: 12)),
                             ],
                           ),
                         ),
@@ -182,11 +193,15 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                         Expanded(
                           child: SegmentedButton<bool>(
                             segments: const [
-                              ButtonSegment(value: false, label: Text('Band Member (Follower)')),
-                              ButtonSegment(value: true, label: Text('Band Leader')),
+                              ButtonSegment(
+                                  value: false,
+                                  label: Text('Band Member (Follower)')),
+                              ButtonSegment(
+                                  value: true, label: Text('Band Leader')),
                             ],
                             selected: {_isLeader},
-                            onSelectionChanged: (set) => setState(() => _isLeader = set.first),
+                            onSelectionChanged: (set) =>
+                                setState(() => _isLeader = set.first),
                           ),
                         ),
                       ],
@@ -195,9 +210,10 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                     if (!_isLeader)
                       SwitchListTile(
                         title: const Text('Auto-Sync With Leader'),
-                        subtitle: const Text('Automatically jump to song and section pushed by leader'),
+                        subtitle: const Text(
+                            'Automatically jump to song and section pushed by leader'),
                         value: _isFollowing,
-                        activeColor: primaryAccent,
+                        activeThumbColor: primaryAccent,
                         onChanged: (val) => setState(() => _isFollowing = val),
                       ),
                   ],
@@ -220,7 +236,9 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                           children: [
                             Icon(Icons.av_timer, color: primaryAccent),
                             const SizedBox(width: 8),
-                            const Text('Stage Metronome', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            const Text('Stage Metronome',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
                           ],
                         ),
                         // Beats per measure selector
@@ -250,7 +268,8 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                         color: primaryAccent,
                       ),
                     ),
-                    const Text('BEATS PER MINUTE', style: TextStyle(fontSize: 12, letterSpacing: 1.5)),
+                    const Text('BEATS PER MINUTE',
+                        style: TextStyle(fontSize: 12, letterSpacing: 1.5)),
 
                     const SizedBox(height: 20),
 
@@ -258,7 +277,8 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(_beatsPerMeasure, (i) {
-                        final isActive = _isMetronomeRunning && _currentBeat == i;
+                        final isActive =
+                            _isMetronomeRunning && _currentBeat == i;
                         final isDownbeat = i == 0;
 
                         return Container(
@@ -268,12 +288,16 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isActive
-                                ? (isDownbeat ? Colors.redAccent : primaryAccent)
-                                : Colors.grey.withOpacity(0.3),
+                                ? (isDownbeat
+                                    ? Colors.redAccent
+                                    : primaryAccent)
+                                : Colors.grey.withValues(alpha: 0.3),
                             boxShadow: isActive
                                 ? [
                                     BoxShadow(
-                                      color: isDownbeat ? Colors.redAccent : primaryAccent,
+                                      color: isDownbeat
+                                          ? Colors.redAccent
+                                          : primaryAccent,
                                       blurRadius: 12,
                                       spreadRadius: 2,
                                     )
@@ -290,7 +314,8 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                     Row(
                       children: [
                         IconButton.filledTonal(
-                          onPressed: () => setState(() => _bpm = (_bpm - 1).clamp(40, 240)),
+                          onPressed: () =>
+                              setState(() => _bpm = (_bpm - 1).clamp(40, 240)),
                           icon: const Icon(Icons.remove),
                         ),
                         Expanded(
@@ -303,7 +328,8 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                           ),
                         ),
                         IconButton.filledTonal(
-                          onPressed: () => setState(() => _bpm = (_bpm + 1).clamp(40, 240)),
+                          onPressed: () =>
+                              setState(() => _bpm = (_bpm + 1).clamp(40, 240)),
                           icon: const Icon(Icons.add),
                         ),
                       ],
@@ -317,11 +343,16 @@ class _LiveBandScreenState extends ConsumerState<LiveBandScreen> with SingleTick
                         Expanded(
                           child: FilledButton.icon(
                             onPressed: _toggleMetronome,
-                            icon: Icon(_isMetronomeRunning ? Icons.stop : Icons.play_arrow),
-                            label: Text(_isMetronomeRunning ? 'Stop' : 'Start Metronome'),
+                            icon: Icon(_isMetronomeRunning
+                                ? Icons.stop
+                                : Icons.play_arrow),
+                            label: Text(_isMetronomeRunning
+                                ? 'Stop'
+                                : 'Start Metronome'),
                             style: FilledButton.styleFrom(
                               backgroundColor: primaryAccent,
-                              foregroundColor: isStage ? Colors.black : Colors.white,
+                              foregroundColor:
+                                  isStage ? Colors.black : Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                             ),
                           ),

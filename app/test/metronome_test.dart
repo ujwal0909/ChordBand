@@ -19,8 +19,10 @@ void main() {
     });
 
     test('clamps BPM within safe performance bounds (40 to 240 BPM)', () {
-      expect((60000 / 100).round().clamp(40, 240), equals(240)); // Fast tap clamped
-      expect((60000 / 2000).round().clamp(40, 240), equals(40)); // Slow tap clamped
+      expect((60000 / 100).round().clamp(40, 240),
+          equals(240)); // Fast tap clamped
+      expect((60000 / 2000).round().clamp(40, 240),
+          equals(40)); // Slow tap clamped
     });
 
     test('calculates beats and downbeat indices correctly for 4/4 and 6/8', () {

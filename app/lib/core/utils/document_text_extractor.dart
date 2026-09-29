@@ -23,7 +23,8 @@ class DocumentTextExtractor {
       final archive = ZipDecoder().decodeBytes(bytes);
       for (final file in archive) {
         if (file.name == 'word/document.xml') {
-          final content = utf8.decode(file.content as List<int>, allowMalformed: true);
+          final content =
+              utf8.decode(file.content as List<int>, allowMalformed: true);
           return _xmlToPlainText(content);
         }
       }
@@ -38,7 +39,8 @@ class DocumentTextExtractor {
     final latin1String = latin1.decode(bytes);
 
     // 1. Scan for all "stream ... endstream" segments in the PDF
-    final streamRegex = RegExp(r'stream[\r\n]+([\s\S]*?)[\r\n]+endstream', multiLine: true);
+    final streamRegex =
+        RegExp(r'stream[\r\n]+([\s\S]*?)[\r\n]+endstream', multiLine: true);
     final matches = streamRegex.allMatches(latin1String);
 
     for (final match in matches) {
@@ -50,7 +52,7 @@ class DocumentTextExtractor {
 
       // Try ZLib / Flate decompression
       try {
-        final decompressed = ZLibDecoder().decodeBytes(streamBytes);
+        final decompressed = const ZLibDecoder().decodeBytes(streamBytes);
         decodedStream = utf8.decode(decompressed, allowMalformed: true);
       } catch (_) {
         try {
@@ -61,7 +63,9 @@ class DocumentTextExtractor {
       }
 
       // Check if this stream contains PDF text drawing operators
-      if (decodedStream.contains('BT') || decodedStream.contains('Tj') || decodedStream.contains('TJ')) {
+      if (decodedStream.contains('BT') ||
+          decodedStream.contains('Tj') ||
+          decodedStream.contains('TJ')) {
         final extracted = _extractTextFromPdfStream(decodedStream);
         if (extracted.trim().isNotEmpty) {
           buffer.writeln(extracted);
@@ -119,7 +123,8 @@ class DocumentTextExtractor {
 
       // 2. Hex string: <48656c6c6f> Tj
       if (token.startsWith('<') && token.endsWith('Tj')) {
-        final hexContent = RegExp(r'<([0-9a-fA-F\s]+)>').firstMatch(token)?.group(1) ?? '';
+        final hexContent =
+            RegExp(r'<([0-9a-fA-F\s]+)>').firstMatch(token)?.group(1) ?? '';
         final decoded = _decodePdfHexString(hexContent).trim();
         if (decoded.isNotEmpty) {
           sb.writeln(decoded);
@@ -128,7 +133,8 @@ class DocumentTextExtractor {
       }
 
       // 3. Literal string: (text) Tj or (text) '
-      final literalMatch = RegExp(r'^\(([\s\S]*?)\)\s*(?:Tj|["\x27])').firstMatch(token);
+      final literalMatch =
+          RegExp(r'^\(([\s\S]*?)\)\s*(?:Tj|["\x27])').firstMatch(token);
       if (literalMatch != null) {
         final rawStr = literalMatch.group(1) ?? '';
         final unescaped = _unescapePdfString(rawStr);
@@ -192,7 +198,12 @@ class DocumentTextExtractor {
     final matches = RegExp(r'[\x20-\x7E\r\n]{4,}')
         .allMatches(raw)
         .map((m) => m.group(0))
-        .where((s) => s != null && s.trim().length > 3 && !s.contains('obj') && !s.contains('endobj') && !s.contains('stream'))
+        .where((s) =>
+            s != null &&
+            s.trim().length > 3 &&
+            !s.contains('obj') &&
+            !s.contains('endobj') &&
+            !s.contains('stream'))
         .join('\n');
     return matches;
   }

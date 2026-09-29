@@ -36,7 +36,8 @@ class SetlistDetailScreen extends ConsumerWidget {
                 children: [
                   const Icon(Icons.music_off, size: 56, color: Colors.grey),
                   const SizedBox(height: 12),
-                  const Text('No songs in this setlist yet', style: TextStyle(fontSize: 16)),
+                  const Text('No songs in this setlist yet',
+                      style: TextStyle(fontSize: 16)),
                   const SizedBox(height: 12),
                   FilledButton.icon(
                     onPressed: () => _showAddSongDialog(context, ref),
@@ -74,7 +75,9 @@ class SetlistDetailScreen extends ConsumerWidget {
                   trailing: IconButton(
                     icon: const Icon(Icons.delete_outline, color: Colors.red),
                     onPressed: () async {
-                      await ref.read(setlistRepositoryProvider).deleteSetlistItem(item.id);
+                      await ref
+                          .read(setlistRepositoryProvider)
+                          .deleteSetlistItem(item.id);
                     },
                   ),
                   onTap: () {
@@ -104,7 +107,8 @@ class SetlistDetailScreen extends ConsumerWidget {
           children: [
             const Padding(
               padding: EdgeInsets.all(16),
-              child: Text('Select Song to Add', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              child: Text('Select Song to Add',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             Expanded(
               child: ListView.builder(
@@ -115,12 +119,16 @@ class SetlistDetailScreen extends ConsumerWidget {
                     title: Text(song.title),
                     subtitle: Text('${song.artist} • Key: ${song.originalKey}'),
                     onTap: () async {
-                      await ref.read(setlistRepositoryProvider).addSongToSetlist(
-                        setlistId: setlistId,
-                        songId: song.id,
-                        sortOrder: 999,
-                      );
-                      Navigator.pop(ctx);
+                      await ref
+                          .read(setlistRepositoryProvider)
+                          .addSongToSetlist(
+                            setlistId: setlistId,
+                            songId: song.id,
+                            sortOrder: 999,
+                          );
+                      if (ctx.mounted) {
+                        Navigator.pop(ctx);
+                      }
                     },
                   );
                 },

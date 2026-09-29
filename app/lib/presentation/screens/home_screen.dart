@@ -43,7 +43,8 @@ class HomeScreen extends ConsumerWidget {
         actions: [
           // Unified Band & Collaboration Button
           PopupMenuButton<String>(
-            tooltip: 'Band Collaboration & Sharing\n• Live Stage Broadcast (Follow-the-Leader)\n• Band Songbooks & Member Sharing',
+            tooltip:
+                'Band Collaboration & Sharing\n• Live Stage Broadcast (Follow-the-Leader)\n• Band Songbooks & Member Sharing',
             icon: const Icon(Icons.groups_3),
             onSelected: (val) {
               if (val == 'live') context.push('/live');
@@ -59,8 +60,10 @@ class HomeScreen extends ConsumerWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Live Stage Broadcast', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('Follow-the-Leader live band sync', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                        Text('Live Stage Broadcast',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('Follow-the-Leader live band sync',
+                            style: TextStyle(fontSize: 11, color: Colors.grey)),
                       ],
                     ),
                   ],
@@ -75,8 +78,10 @@ class HomeScreen extends ConsumerWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Band Songbooks & Members', style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('Share via QR code & cloud sync', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                        Text('Band Songbooks & Members',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('Share via QR code & cloud sync',
+                            style: TextStyle(fontSize: 11, color: Colors.grey)),
                       ],
                     ),
                   ],
@@ -88,7 +93,8 @@ class HomeScreen extends ConsumerWidget {
           // Setlists
           IconButton(
             icon: const Icon(Icons.playlist_play),
-            tooltip: 'Setlists & Repertoire\nOrganize song orders for performances',
+            tooltip:
+                'Setlists & Repertoire\nOrganize song orders for performances',
             onPressed: () => context.push('/setlists'),
           ),
 
@@ -123,18 +129,25 @@ class HomeScreen extends ConsumerWidget {
                 hintText: 'Search songs, artists, lyrics...',
                 prefixIcon: const Icon(Icons.search),
                 filled: true,
-                fillColor: isStageMode ? AppColors.stageSurface : Theme.of(context).cardColor,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                fillColor: isStageMode
+                    ? AppColors.stageSurface
+                    : Theme.of(context).cardColor,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
-                    color: isStageMode ? AppColors.stageBorder : Theme.of(context).dividerColor,
+                    color: isStageMode
+                        ? AppColors.stageBorder
+                        : Theme.of(context).dividerColor,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
-                    color: isStageMode ? AppColors.stageBorder : Theme.of(context).dividerColor,
+                    color: isStageMode
+                        ? AppColors.stageBorder
+                        : Theme.of(context).dividerColor,
                   ),
                 ),
               ),
@@ -148,18 +161,22 @@ class HomeScreen extends ConsumerWidget {
           Expanded(
             child: filteredSongsAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, _) => Center(child: Text('Error loading songs: $err')),
+              error: (err, _) =>
+                  Center(child: Text('Error loading songs: $err')),
               data: (songs) {
                 if (songs.isEmpty) {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.library_music_outlined, size: 64, color: Colors.grey.withOpacity(0.5)),
+                        Icon(Icons.library_music_outlined,
+                            size: 64,
+                            color: Colors.grey.withValues(alpha: 0.5)),
                         const SizedBox(height: 16),
                         const Text(
                           'No songs found',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
                         Text(
@@ -176,18 +193,21 @@ class HomeScreen extends ConsumerWidget {
                   itemCount: songs.length,
                   itemBuilder: (ctx, index) {
                     final song = songs[index];
-                    final isTelugu = RegExp(r'[\u0C00-\u0C7F]').hasMatch(song.chordProContent);
+                    final isTelugu = RegExp(r'[\u0C00-\u0C7F]')
+                        .hasMatch(song.chordProContent);
 
                     return Card(
                       margin: const EdgeInsets.only(bottom: 8),
                       child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 4),
                         title: Text(
                           song.title,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: isStageMode ? AppColors.stageTextPrimary : null,
+                            color:
+                                isStageMode ? AppColors.stageTextPrimary : null,
                           ),
                         ),
                         subtitle: Row(
@@ -195,7 +215,9 @@ class HomeScreen extends ConsumerWidget {
                             Text(
                               song.artist,
                               style: TextStyle(
-                                color: isStageMode ? AppColors.stageTextSecondary : null,
+                                color: isStageMode
+                                    ? AppColors.stageTextSecondary
+                                    : null,
                               ),
                             ),
                             if (song.tempo != null) ...[
@@ -206,13 +228,15 @@ class HomeScreen extends ConsumerWidget {
                         ),
                         leading: CircleAvatar(
                           backgroundColor: isStageMode
-                              ? AppColors.stageChord.withOpacity(0.15)
-                              : AppColors.primary.withOpacity(0.12),
+                              ? AppColors.stageChord.withValues(alpha: 0.15)
+                              : AppColors.primary.withValues(alpha: 0.12),
                           child: Text(
                             song.originalKey ?? '?',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: isStageMode ? AppColors.stageChord : AppColors.primary,
+                              color: isStageMode
+                                  ? AppColors.stageChord
+                                  : AppColors.primary,
                             ),
                           ),
                         ),
@@ -221,12 +245,15 @@ class HomeScreen extends ConsumerWidget {
                           children: [
                             if (isTelugu)
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 6, vertical: 2),
                                 margin: const EdgeInsets.only(right: 8),
                                 decoration: BoxDecoration(
-                                  color: Colors.teal.withOpacity(0.15),
+                                  color: Colors.teal.withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(color: Colors.teal.withOpacity(0.4)),
+                                  border: Border.all(
+                                      color:
+                                          Colors.teal.withValues(alpha: 0.4)),
                                 ),
                                 child: const Text(
                                   'తెలుగు',
@@ -273,13 +300,16 @@ class HomeScreen extends ConsumerWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text('Add Song to Songbook', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                child: Text('Add Song to Songbook',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
               const Divider(),
               ListTile(
                 leading: const Icon(Icons.edit_note, color: Colors.blue),
                 title: const Text('Create Song Manually'),
-                subtitle: const Text('Interactive chord palette, section tags & auto-formatting'),
+                subtitle: const Text(
+                    'Interactive chord palette, section tags & auto-formatting'),
                 onTap: () {
                   Navigator.pop(ctx);
                   context.push('/song/new/edit');
@@ -288,7 +318,8 @@ class HomeScreen extends ConsumerWidget {
               ListTile(
                 leading: const Icon(Icons.content_paste_go, color: Colors.teal),
                 title: const Text('Paste Lyrics from PDF, Word or Web'),
-                subtitle: const Text('Auto-detects chords above lyrics and formats instantly'),
+                subtitle: const Text(
+                    'Auto-detects chords above lyrics and formats instantly'),
                 onTap: () {
                   Navigator.pop(ctx);
                   context.push('/import');
@@ -297,7 +328,8 @@ class HomeScreen extends ConsumerWidget {
               ListTile(
                 leading: const Icon(Icons.folder_open, color: Colors.indigo),
                 title: const Text('Import Document / File'),
-                subtitle: const Text('Open .pdf, .docx, .txt, or .chordpro file'),
+                subtitle:
+                    const Text('Open .pdf, .docx, .txt, or .chordpro file'),
                 onTap: () {
                   Navigator.pop(ctx);
                   context.push('/import');

@@ -33,11 +33,16 @@ class TranspositionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = isStageMode ? AppColors.stageSurface : Theme.of(context).cardColor;
-    final borderColor = isStageMode ? AppColors.stageBorder : Theme.of(context).dividerColor;
-    final primaryAccent = isStageMode ? AppColors.stageChord : AppColors.primary;
+    final bgColor =
+        isStageMode ? AppColors.stageSurface : Theme.of(context).cardColor;
+    final borderColor =
+        isStageMode ? AppColors.stageBorder : Theme.of(context).dividerColor;
+    final primaryAccent =
+        isStageMode ? AppColors.stageChord : AppColors.primary;
 
-    final isTransposed = state.semitoneOffset != 0 || state.targetKey != null || state.capoFret != 0;
+    final isTransposed = state.semitoneOffset != 0 ||
+        state.targetKey != null ||
+        state.capoFret != 0;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -53,9 +58,14 @@ class TranspositionBar extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
               decoration: BoxDecoration(
-                color: isStageMode ? Colors.white10 : Colors.grey.withOpacity(0.12),
+                color: isStageMode
+                    ? Colors.white10
+                    : Colors.grey.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: isStageMode ? Colors.white24 : Colors.grey.withOpacity(0.3)),
+                border: Border.all(
+                    color: isStageMode
+                        ? Colors.white24
+                        : Colors.grey.withValues(alpha: 0.3)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -64,7 +74,8 @@ class TranspositionBar extends StatelessWidget {
                     onPressed: () => onTranspose(-1),
                     icon: const Icon(Icons.remove_circle, size: 22),
                     tooltip: 'Transpose Down (-1 Semitone)\nHotkey: [',
-                    color: isStageMode ? AppColors.stageChord : AppColors.primary,
+                    color:
+                        isStageMode ? AppColors.stageChord : AppColors.primary,
                     style: IconButton.styleFrom(
                       minimumSize: const Size(36, 36),
                       padding: EdgeInsets.zero,
@@ -81,7 +92,9 @@ class TranspositionBar extends StatelessWidget {
                             fontSize: 9,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.8,
-                            color: isStageMode ? AppColors.stageTextSecondary : Colors.grey[700],
+                            color: isStageMode
+                                ? AppColors.stageTextSecondary
+                                : Colors.grey[700],
                           ),
                         ),
                         Text(
@@ -103,7 +116,8 @@ class TranspositionBar extends StatelessWidget {
                     onPressed: () => onTranspose(1),
                     icon: const Icon(Icons.add_circle, size: 22),
                     tooltip: 'Transpose Up (+1 Semitone)\nHotkey: ]',
-                    color: isStageMode ? AppColors.stageChord : AppColors.primary,
+                    color:
+                        isStageMode ? AppColors.stageChord : AppColors.primary,
                     style: IconButton.styleFrom(
                       minimumSize: const Size(36, 36),
                       padding: EdgeInsets.zero,
@@ -130,21 +144,28 @@ class TranspositionBar extends StatelessWidget {
                       children: [
                         Text(
                           'Key: ${k.toString()}',
-                          style: TextStyle(fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal),
+                          style: TextStyle(
+                              fontWeight: isCurrent
+                                  ? FontWeight.bold
+                                  : FontWeight.normal),
                         ),
                         if (isOrig)
-                          const Text(' (Orig)', style: TextStyle(fontSize: 11, color: Colors.grey)),
+                          const Text(' (Orig)',
+                              style:
+                                  TextStyle(fontSize: 11, color: Colors.grey)),
                       ],
                     ),
                   );
                 }).toList();
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 decoration: BoxDecoration(
-                  color: primaryAccent.withOpacity(0.14),
+                  color: primaryAccent.withValues(alpha: 0.14),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: primaryAccent.withOpacity(0.4)),
+                  border:
+                      Border.all(color: primaryAccent.withValues(alpha: 0.4)),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -183,7 +204,8 @@ class TranspositionBar extends StatelessWidget {
                 label: const Text('Reset', style: TextStyle(fontSize: 12)),
                 style: OutlinedButton.styleFrom(
                   visualDensity: VisualDensity.compact,
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 ),
               ),
               const SizedBox(width: 8),
@@ -193,30 +215,43 @@ class TranspositionBar extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
               decoration: BoxDecoration(
-                color: isStageMode ? Colors.white10 : Colors.grey.withOpacity(0.12),
+                color: isStageMode
+                    ? Colors.white10
+                    : Colors.grey.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: state.capoFret > 0 ? () => onSelectCapo(state.capoFret - 1) : null,
+                    onPressed: state.capoFret > 0
+                        ? () => onSelectCapo(state.capoFret - 1)
+                        : null,
                     icon: const Icon(Icons.remove, size: 16),
                     tooltip: 'Decrease Capo',
-                    style: IconButton.styleFrom(minimumSize: const Size(28, 28), padding: EdgeInsets.zero),
+                    style: IconButton.styleFrom(
+                        minimumSize: const Size(28, 28),
+                        padding: EdgeInsets.zero),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     child: Text(
-                      state.capoFret == 0 ? 'Capo: Off' : 'Capo ${state.capoFret}',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                      state.capoFret == 0
+                          ? 'Capo: Off'
+                          : 'Capo ${state.capoFret}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 12),
                     ),
                   ),
                   IconButton(
-                    onPressed: state.capoFret < 12 ? () => onSelectCapo(state.capoFret + 1) : null,
+                    onPressed: state.capoFret < 12
+                        ? () => onSelectCapo(state.capoFret + 1)
+                        : null,
                     icon: const Icon(Icons.add, size: 16),
                     tooltip: 'Increase Capo',
-                    style: IconButton.styleFrom(minimumSize: const Size(28, 28), padding: EdgeInsets.zero),
+                    style: IconButton.styleFrom(
+                        minimumSize: const Size(28, 28),
+                        padding: EdgeInsets.zero),
                   ),
                 ],
               ),
@@ -259,7 +294,8 @@ class TranspositionBar extends StatelessWidget {
               onPressed: onToggleFlats,
               icon: Text(
                 state.preferFlats ? '♭' : '♯',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               tooltip: state.preferFlats
                   ? 'Currently Flats (♭) - Click for Sharps (♯)'
@@ -270,10 +306,14 @@ class TranspositionBar extends StatelessWidget {
             IconButton(
               onPressed: onToggleMonospace,
               icon: Icon(
-                state.isMonospace ? Icons.font_download : Icons.font_download_outlined,
+                state.isMonospace
+                    ? Icons.font_download
+                    : Icons.font_download_outlined,
                 size: 20,
               ),
-              tooltip: state.isMonospace ? 'Switch to Proportional Font' : 'Switch to Monospace Font',
+              tooltip: state.isMonospace
+                  ? 'Switch to Proportional Font'
+                  : 'Switch to Monospace Font',
             ),
           ],
         ),

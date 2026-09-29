@@ -37,7 +37,8 @@ class AppTheme {
         side: const BorderSide(color: AppColors.lightBorder),
       ),
     ),
-    dividerTheme: const DividerThemeData(color: AppColors.lightBorder, thickness: 1),
+    dividerTheme:
+        const DividerThemeData(color: AppColors.lightBorder, thickness: 1),
     textTheme: const TextTheme(
       bodyLarge: TextStyle(color: AppColors.lightTextPrimary, fontSize: 16),
       bodyMedium: TextStyle(color: AppColors.lightTextSecondary, fontSize: 14),
@@ -72,7 +73,8 @@ class AppTheme {
         side: const BorderSide(color: AppColors.darkBorder),
       ),
     ),
-    dividerTheme: const DividerThemeData(color: AppColors.darkBorder, thickness: 1),
+    dividerTheme:
+        const DividerThemeData(color: AppColors.darkBorder, thickness: 1),
     textTheme: const TextTheme(
       bodyLarge: TextStyle(color: AppColors.darkTextPrimary, fontSize: 16),
       bodyMedium: TextStyle(color: AppColors.darkTextSecondary, fontSize: 14),
@@ -108,9 +110,13 @@ class AppTheme {
         side: const BorderSide(color: AppColors.stageBorder, width: 1.5),
       ),
     ),
-    dividerTheme: const DividerThemeData(color: AppColors.stageBorder, thickness: 1.5),
+    dividerTheme:
+        const DividerThemeData(color: AppColors.stageBorder, thickness: 1.5),
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: AppColors.stageTextPrimary, fontSize: 18, fontWeight: FontWeight.w600),
+      bodyLarge: TextStyle(
+          color: AppColors.stageTextPrimary,
+          fontSize: 18,
+          fontWeight: FontWeight.w600),
       bodyMedium: TextStyle(color: AppColors.stageTextSecondary, fontSize: 15),
     ),
   );

@@ -26,7 +26,9 @@ void main() {
       expect(bFlat.root.semitone, equals(10));
     });
 
-    test('parses extended qualities: 7, maj7, min7, dim, dim7, m7b5, aug, sus2, sus4, add9', () {
+    test(
+        'parses extended qualities: 7, maj7, min7, dim, dim7, m7b5, aug, sus2, sus4, add9',
+        () {
       expect(Chord.parse('G7').isDominant, isTrue);
       expect(Chord.parse('Cmaj7').quality, equals('maj7'));
       expect(Chord.parse('Dm7').quality, equals('m7'));

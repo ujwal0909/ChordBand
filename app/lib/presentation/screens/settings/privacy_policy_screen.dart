@@ -9,17 +9,18 @@ class PrivacyPolicyScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Privacy Policy'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
               'ChordBand Privacy Policy',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            Text('Last updated: September 2026', style: TextStyle(color: Colors.grey)),
+            Text('Last updated: September 2026',
+                style: TextStyle(color: Colors.grey)),
             Divider(height: 24),
             Text(
               '1. Data Collection & Offline-First Storage\n'

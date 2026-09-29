@@ -32,10 +32,12 @@ class ChordLineWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: isStageMode
                 ? AppColors.stageSurface
-                : AppColors.primary.withOpacity(0.08),
+                : AppColors.primary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(6),
             border: Border.all(
-              color: isStageMode ? AppColors.stageBorder : AppColors.primaryLight.withOpacity(0.3),
+              color: isStageMode
+                  ? AppColors.stageBorder
+                  : AppColors.primaryLight.withValues(alpha: 0.3),
             ),
           ),
           child: Text(
@@ -43,7 +45,8 @@ class ChordLineWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: state.fontSize * 0.85,
               fontStyle: FontStyle.italic,
-              color: isStageMode ? AppColors.stageChordAccent : AppColors.primary,
+              color:
+                  isStageMode ? AppColors.stageChordAccent : AppColors.primary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -97,12 +100,15 @@ class ChordLineWidget extends StatelessWidget {
           // Chord above
           if (displayChordText != null)
             GestureDetector(
-              onTap: () => ChordDiagramModal.show(context, chord!, isStageMode: isStageMode),
+              onTap: () => ChordDiagramModal.show(context, chord!,
+                  isStageMode: isStageMode),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
                 margin: const EdgeInsets.only(bottom: 2),
                 decoration: BoxDecoration(
-                  color: isStageMode ? Colors.transparent : AppColors.lightChordBadge,
+                  color: isStageMode
+                      ? Colors.transparent
+                      : AppColors.lightChordBadge,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(

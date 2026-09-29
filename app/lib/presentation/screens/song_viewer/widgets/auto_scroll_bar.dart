@@ -27,10 +27,12 @@ class AutoScrollBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bgColor = isStageMode
-        ? AppColors.stageSurface.withOpacity(0.95)
-        : Theme.of(context).cardColor.withOpacity(0.95);
-    final borderColor = isStageMode ? AppColors.stageBorder : Theme.of(context).dividerColor;
-    final primaryAccent = isStageMode ? AppColors.stageChord : AppColors.primary;
+        ? AppColors.stageSurface.withValues(alpha: 0.95)
+        : Theme.of(context).cardColor.withValues(alpha: 0.95);
+    final borderColor =
+        isStageMode ? AppColors.stageBorder : Theme.of(context).dividerColor;
+    final primaryAccent =
+        isStageMode ? AppColors.stageChord : AppColors.primary;
 
     return Container(
       margin: const EdgeInsets.all(12),
@@ -41,7 +43,7 @@ class AutoScrollBar extends StatelessWidget {
         border: Border.all(color: borderColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -61,7 +63,9 @@ class AutoScrollBar extends StatelessWidget {
               backgroundColor: primaryAccent,
               minimumSize: const Size(40, 40),
             ),
-            tooltip: state.isAutoScrolling ? 'Pause Auto-Scroll' : 'Start Auto-Scroll',
+            tooltip: state.isAutoScrolling
+                ? 'Pause Auto-Scroll'
+                : 'Start Auto-Scroll',
           ),
           const SizedBox(width: 8),
 

@@ -35,7 +35,8 @@ class FirestoreSyncService {
   bool get hasFirestore => _firestore != null;
 
   /// Sync pending local offline modifications with Cloud Firestore
-  Future<void> syncPendingLocalChanges({String? groupId, String? userId}) async {
+  Future<void> syncPendingLocalChanges(
+      {String? groupId, String? userId}) async {
     _state = SyncState.syncing;
     try {
       final songs = await _db.getAllSongs();
@@ -46,7 +47,9 @@ class FirestoreSyncService {
         final targetGroupId = groupId ?? song.groupId;
 
         // If Cloud Firestore is configured and connected, upload the song document
-        if (_firestore != null && targetGroupId != null && targetGroupId.isNotEmpty) {
+        if (_firestore != null &&
+            targetGroupId != null &&
+            targetGroupId.isNotEmpty) {
           final songDoc = _firestore!
               .collection('bands')
               .doc(targetGroupId)

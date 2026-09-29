@@ -18,7 +18,8 @@ final songRepositoryProvider = Provider<SongRepository>((ref) {
 });
 
 // Theme Mode Provider (Light, Dark, Stage)
-final themeModeProvider = StateProvider<AppThemeMode>((ref) => AppThemeMode.dark);
+final themeModeProvider =
+    StateProvider<AppThemeMode>((ref) => AppThemeMode.dark);
 
 // App Locale Provider (null for system, 'en', 'te')
 final appLocaleProvider = StateProvider<Locale?>((ref) => null);

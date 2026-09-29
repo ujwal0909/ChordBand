@@ -17,7 +17,8 @@ void main() async {
     );
     debugPrint('Firebase initialized successfully for ChordBand');
   } catch (e) {
-    debugPrint('Firebase initialization skipped or in offline fallback mode: $e');
+    debugPrint(
+        'Firebase initialization skipped or in offline fallback mode: $e');
   }
 
   // Create ProviderContainer to seed songs before starting UI

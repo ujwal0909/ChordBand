@@ -153,10 +153,10 @@ class ChordTransposer {
       currentKey: targetKey ??
           (song.currentKey != null
               ? KeySignature.tryParse(NoteTransposer.transpose(
-                  song.currentKey!.tonic,
-                  delta,
-                  preferFlats: preferFlats,
-                ).toString() +
+                    song.currentKey!.tonic,
+                    delta,
+                    preferFlats: preferFlats,
+                  ).toString() +
                   (song.currentKey!.isMinor ? 'm' : ''))
               : null),
       capo: newCapo ?? song.capo,

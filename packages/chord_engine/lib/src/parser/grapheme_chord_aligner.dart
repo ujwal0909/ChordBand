@@ -49,7 +49,7 @@ class GraphemeChordAligner {
         final precedingLyrics = lyricClusters
             .sublist(lastLyricClusterIndex, targetClusterIndex)
             .join('');
-        
+
         // If this is the very first segment before any chords
         if (segments.isEmpty) {
           segments.add(ChordSegment(lyrics: precedingLyrics));
