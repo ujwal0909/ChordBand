@@ -1,0 +1,27 @@
+{title: Amazing Grace}
+{artist: John Newton}
+{key: G}
+{tempo: 74}
+{time: 3/4}
+{capo: 0}
+
+{start_of_verse: Verse 1}
+[G]Amazing grace how [C]sweet the [G]sound
+That saved a [Em]wretch like [D]me
+I [G]once was lost but [C]now am [G]found
+Was [Em]blind but [D]now I [G]see
+{end_of_verse}
+
+{start_of_verse: Verse 2}
+'Twas [G]grace that taught my [C]heart to [G]fear
+And grace my [Em]fears re[D]lieved
+How [G]precious did that [C]grace ap[G]pear
+The [Em]hour I [D]first be[G]lieved
+{end_of_verse}
+
+{start_of_verse: Verse 3}
+Through [G]many dangers, [C]toils and [G]snares
+I have al[Em]ready [D]come
+'Tis [G]grace hath brought me [C]safe thus [G]far
+And [Em]grace will [D]lead me [G]home
+{end_of_verse}

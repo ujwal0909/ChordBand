@@ -1,0 +1,120 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for authentication and roles
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Role-based authorization for Band / Group
+    function getBandData(bandId) {
+      return get(/databases/$(database)/documents/bands/$(bandId)).data;
+    }
+
+    function getUserRole(bandId) {
+      return getBandData(bandId).members[request.auth.uid].role;
+    }
+
+    function isBandMember(bandId) {
+      return isAuthenticated() && (
+        request.auth.uid in getBandData(bandId).members
+      );
+    }
+
+    function isBandOwner(bandId) {
+      return isAuthenticated() && (
+        getBandData(bandId).ownerId == request.auth.uid ||
+        getUserRole(bandId) == 'owner'
+      );
+    }
+
+    function isBandAdmin(bandId) {
+      return isAuthenticated() && (
+        isBandOwner(bandId) ||
+        getUserRole(bandId) == 'admin'
+      );
+    }
+
+    function isBandEditor(bandId) {
+      return isAuthenticated() && (
+        isBandAdmin(bandId) ||
+        getUserRole(bandId) == 'editor'
+      );
+    }
+
+    function isBandViewer(bandId) {
+      return isBandMember(bandId);
+    }
+
+    // User profile documents
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isUser(userId);
+      allow delete: if isUser(userId); // Account deletion requirement
+    }
+
+    // Bands & Collaborative Groups
+    match /bands/{bandId} {
+      // Any authenticated user can read public band info or if they are a member
+      allow read: if isAuthenticated() && (
+        resource.data.isPublic == true ||
+        request.auth.uid in resource.data.members
+      );
+
+      // Any authenticated user can create a band as owner
+      allow create: if isAuthenticated() &&
+        request.resource.data.ownerId == request.auth.uid &&
+        request.resource.data.members[request.auth.uid].role == 'owner';
+
+      // Only Owner and Admin can update band settings and membership
+      allow update: if isBandAdmin(bandId);
+
+      // Only Owner can delete the band
+      allow delete: if isBandOwner(bandId);
+
+      // Shared Songbook in Band
+      match /songs/{songId} {
+        allow read: if isBandViewer(bandId);
+        allow create: if isBandEditor(bandId) &&
+          request.resource.data.updatedBy == request.auth.uid;
+        allow update: if isBandEditor(bandId) &&
+          request.resource.data.updatedBy == request.auth.uid;
+        allow delete: if isBandAdmin(bandId);
+
+        // Version History for Conflict Resolution / Rollback
+        match /versions/{versionId} {
+          allow read: if isBandViewer(bandId);
+          allow create: if isBandEditor(bandId);
+          allow update, delete: if false; // Versions are immutable snapshots
+        }
+      }
+
+      // Shared Setlists in Band
+      match /setlists/{setlistId} {
+        allow read: if isBandViewer(bandId);
+        allow create, update: if isBandEditor(bandId);
+        allow delete: if isBandAdmin(bandId);
+      }
+
+      // Real-Time Live Band Mode Session ("Follow the Leader")
+      match /liveSession/{sessionId} {
+        allow read: if isBandViewer(bandId);
+        // Leader can broadcast live song, section, and key
+        allow write: if isBandEditor(bandId);
+      }
+
+      // Immutable Audit Logs
+      match /auditLogs/{logId} {
+        allow read: if isBandAdmin(bandId);
+        allow create: if isBandMember(bandId) &&
+          request.resource.data.userId == request.auth.uid;
+        allow update, delete: if false; // Append-only audit trail
+      }
+    }
+  }
+}

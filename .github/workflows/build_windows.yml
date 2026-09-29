@@ -1,0 +1,40 @@
+name: Build Windows MSIX
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build_windows:
+    name: Build Windows MSIX Package
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Enable Windows Desktop Support
+        run: flutter config --enable-windows-desktop
+
+      - name: Install dependencies
+        working-directory: app
+        run: flutter pub get
+
+      - name: Build Windows Executable
+        working-directory: app
+        run: flutter build windows --release
+
+      - name: Package MSIX for Microsoft Store
+        working-directory: app
+        run: flutter pub run msix:create
+
+      - name: Upload Windows MSIX Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chordband-windows-msix
+          path: app/build/windows/runner/Release/*.msix
