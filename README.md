@@ -98,51 +98,5 @@ ChordBand/
     └── WINDOWS_STORE_RELEASE_GUIDE.md # MSIX packaging & Microsoft Store checklist
 ```
 
----
-
-## 🚀 Getting Started
-
-### 1. Run Pure-Dart Chord Engine Tests
-```bash
-cd packages/chord_engine
-dart pub get
-dart test
-```
-
-### 2. Run Flutter App Locally
-```bash
-cd app
-flutter pub get
-flutter run
-```
-
-### 3. Run Flutter App Tests
-```bash
-cd app
-flutter test
-```
-
-### 4. Build Cloud Functions
-```bash
-cd backend/functions
-npm install
-npm run build
-```
-
-### 5. Run Firebase Emulators
-```bash
-cd backend
-firebase emulators:start
-```
-
----
-
-## 📱 Release & Store Packaging
-
-- **Android (Google Play)**: Follow [docs/ANDROID_RELEASE_GUIDE.md](docs/ANDROID_RELEASE_GUIDE.md) to generate the signed `.aab` bundle and complete the Google Play Data Safety declaration.
-- **Windows (Microsoft Store)**: Follow [docs/WINDOWS_STORE_RELEASE_GUIDE.md](docs/WINDOWS_STORE_RELEASE_GUIDE.md) to build the `.msix` package and submit to Microsoft Partner Center.
-
----
-
 ## 📄 License
 ChordBand is released under the MIT License.
